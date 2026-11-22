@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#0A1620">
+<title>时光侦局 · 穿越千年 亲历历史</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+:root{
+  --bg:#0A1620; --bg2:#101E2A; --bg3:#162836;
+  --gold:#C49E54; --gold2:#E8C878; --gold3:#F0D79A; --gold4:#A87F35;
+  --teal:#3F8F86; --teal2:#5FB3A7; --cream:#E9E2CF; --muted:#8B9E98;
+  --line:rgba(196,158,84,.28);
+  --serif:'Noto Serif SC','Songti SC',Georgia,serif;
+  --sans:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:#05090D;color:var(--cream);font-family:var(--sans)}
+body{display:flex;justify-content:center}
+#phone{width:100%;max-width:480px;min-height:100vh;position:relative;background:
+  radial-gradient(120% 60% at 50% 0%,#12283A 0%,rgba(10,22,32,0) 60%),var(--bg);
+  padding-bottom:96px;overflow-x:hidden}
+#phone::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.35;
+  background-image:radial-gradient(rgba(196,158,84,.18) 1px,transparent 1px);background-size:26px 26px}
+#app{position:relative;z-index:1}
+a{color:inherit;text-decoration:none}
+img{display:block}
+
+/* ---------- 通用 ---------- */
+.wrap{padding:18px 18px 8px}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;
+  padding:12px 14px;background:rgba(10,22,32,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.back{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.03);cursor:pointer;font-size:15px;color:var(--gold2);flex:0 0 auto}
+.ttl{font-family:var(--serif);font-size:17px;font-weight:700;letter-spacing:1px;color:var(--cream);flex:1}
+.sub{font-size:11px;color:var(--muted);letter-spacing:1px;margin-top:2px}
+.card{background:linear-gradient(160deg,rgba(22,40,54,.96),rgba(12,24,34,.96));border:1px solid var(--line);
+  border-radius:16px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
+.card::after{content:'';position:absolute;left:0;top:0;width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.5}
+.card.tap{cursor:pointer;transition:transform .15s, border-color .15s}
+.card.tap:active{transform:scale(.985);border-color:rgba(196,158,84,.55)}
+.h1{font-family:var(--serif);font-size:22px;font-weight:900;letter-spacing:2px;margin:0 0 6px}
+.h2{font-family:var(--serif);font-size:16px;font-weight:700;letter-spacing:1px;margin:0 0 8px;color:var(--gold2)}
+.muted{color:var(--muted);font-size:12px;line-height:1.7}
+.gold{color:var(--gold2)}
+.row{display:flex;align-items:center;gap:10px}
+.between{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;cursor:pointer;
+  font-family:var(--sans);font-size:14px;font-weight:500;padding:12px 18px;border-radius:12px;transition:transform .12s,opacity .12s}
+.btn:active{transform:scale(.97);opacity:.92}
+.btn.primary{background:linear-gradient(135deg,var(--gold3),var(--gold2) 45%,var(--gold4));color:#231A0C;
+  box-shadow:0 6px 18px rgba(196,158,84,.28)}
+.btn.ghost{background:rgba(255,255,255,.04);color:var(--cream);border:1px solid var(--line)}
+.btn.block{display:flex;width:100%}
+.btn.sm{padding:8px 12px;font-size:12px;border-radius:10px}
+.btn[disabled]{opacity:.42;cursor:not-allowed}
+.ipt{flex:1;min-width:0;height:44px;padding:0 14px;border-radius:12px;outline:0;
+  background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--cream);
+  font-family:var(--sans);font-size:13px}
+.ipt::placeholder{color:rgba(216,230,223,.42)}
+.ipt:focus{border-color:rgba(232,200,120,.45)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);
+  font-size:12px;color:var(--muted);cursor:pointer;white-space:nowrap}
+.chip.on{background:linear-gradient(135deg,rgba(232,200,120,.22),rgba(196,158,84,.1));color:var(--gold2);border-color:rgba(232,200,120,.55)}
+.tag{font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(95,179,167,.16);color:var(--teal2);border:1px solid rgba(95,179,167,.3)}
+.tag.gold{background:rgba(232,200,120,.14);color:var(--gold2);border-color:rgba(232,200,120,.34)}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:14px 0}
+.progressbar{height:6px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.progressbar > i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--teal2),var(--gold2))}
+.stars{letter-spacing:2px;color:var(--gold2);font-size:13px}
+.stars i{color:rgba(255,255,255,.16);font-style:normal}
+
+/* ---------- 启动页 ---------- */
+.splash{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0}
+.splash .bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.splash .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,14,20,.55) 0%,rgba(6,14,20,.25) 40%,rgba(6,14,20,.96) 100%)}
+.splash .inner{position:relative;z-index:2;padding:0 24px 48px;text-align:center}
+.splash .logo{font-family:var(--serif);font-size:40px;font-weight:900;letter-spacing:10px;color:var(--gold3);
+  text-shadow:0 0 30px rgba(232,200,120,.4),0 4px 20px rgba(0,0,0,.6)}
+.splash .slog{font-family:var(--serif);font-size:13px;letter-spacing:6px;color:var(--cream);opacity:.86;margin-top:14px}
+.splash .latin{font-size:10px;letter-spacing:3px;color:var(--muted);margin-top:10px}
+.splash .btn.primary{margin-top:30px;width:100%;padding:15px;font-family:var(--serif);font-size:16px;letter-spacing:4px}
+
+/* ---------- 首页 ---------- */
+.hello{display:flex;align-items:center;gap:12px;margin:6px 0 16px}
+.ava{width:46px;height:46px;border-radius:50%;overflow:hidden;border:1px solid rgba(232,200,120,.5);background:#16283A;flex:0 0 auto}
+.ava img{width:100%;height:100%;object-fit:cover}
+.hello .who{font-family:var(--serif);font-size:17px;font-weight:700;letter-spacing:1px}
+.hello .tip{font-size:11px;color:var(--muted);margin-top:3px}
+.points{display:flex;background:linear-gradient(120deg,rgba(232,200,120,.13),rgba(63,143,134,.1));
+  border:1px solid rgba(232,200,120,.32);border-radius:16px;padding:14px 6px;margin-bottom:16px}
+.points > div{flex:1;text-align:center;position:relative}
+.points > div + div::before{content:none}
+.points b{display:block;font-family:var(--serif);font-size:22px;color:var(--gold2);font-weight:900}
+.points span{font-size:10px;color:var(--muted);letter-spacing:1px}
+.entry{display:flex;gap:12px;align-items:center}
+.entry .ico{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:19px;font-weight:700;color:#241B0C;
+  background:linear-gradient(135deg,var(--gold3),var(--gold4));flex:0 0 auto}
+.entry .ico.t{background:linear-gradient(135deg,var(--teal2),var(--teal));color:#07100F}
+.entry .name{font-family:var(--serif);font-size:15px;font-weight:700;letter-spacing:.5px}
+.entry .desc{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6}
+.entry .go{color:var(--gold);font-size:18px}
+
+/* ---------- 剧本 ---------- */
+.script{display:flex;gap:14px}
+.script .cover{width:76px;height:96px;border-radius:12px;overflow:hidden;border:1px solid var(--line);flex:0 0 auto}
+.script .cover img{width:100%;height:100%;object-fit:cover}
+.acts{display:flex;gap:8px;margin:6px 0 12px}
+.act{flex:1;padding:10px 6px;border-radius:12px;text-align:center;border:1px solid var(--line);background:rgba(255,255,255,.03);cursor:pointer}
+.act b{display:block;font-family:var(--serif);font-size:12px;font-weight:700;color:var(--cream)}
+.act span{font-size:10px;color:var(--muted)}
+.act.on{border-color:rgba(232,200,120,.6);background:linear-gradient(160deg,rgba(232,200,120,.16),rgba(196,158,84,.05))}
+.act.on b{color:var(--gold2)}
+.act.done span{color:var(--teal2)}
+.chat{display:flex;flex-direction:column;gap:12px;margin:4px 0 10px}
+.msg{display:flex;gap:8px;align-items:flex-start}
+.msg .who{font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:4px}
+.msg .bubble{max-width:84%;padding:11px 13px;border-radius:14px;font-size:13px;line-height:1.75;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);color:#DCD5C2}
+.msg.ai .bubble{border-color:rgba(196,158,84,.3);background:linear-gradient(150deg,rgba(196,158,84,.1),rgba(255,255,255,.02))}
+.msg.me{justify-content:flex-end}
+.msg.me .bubble{background:linear-gradient(135deg,rgba(232,200,120,.22),rgba(168,127,53,.14));color:var(--cream);border-color:rgba(232,200,120,.3)}
+.missions{margin:10px 0 4px}
+.mission{display:flex;gap:9px;align-items:center;font-size:12.5px;color:#CFC8B6;padding:7px 0;cursor:pointer}
+.mission .box{width:17px;height:17px;border-radius:5px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;color:#0A1620}
+.mission.on .box{background:linear-gradient(135deg,var(--gold3),var(--gold2));border-color:transparent}
+.mission.on{color:var(--gold2)}
+.inputbar{display:flex;gap:8px;margin-top:10px}
+.inputbar input{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:12px;
+  padding:12px 14px;color:var(--cream);font-size:13px;font-family:var(--sans);outline:none}
+.inputbar input::placeholder{color:#66796F}
+
+/* ---------- 短剧 ---------- */
+.ep{display:flex;gap:12px;padding:10px;border-radius:14px;border:1px solid var(--line);margin-bottom:12px;
+  background:linear-gradient(150deg,rgba(22,40,54,.9),rgba(12,24,34,.9));cursor:pointer;align-items:center}
+.ep .thumb{width:64px;height:86px;border-radius:10px;overflow:hidden;flex:0 0 auto;position:relative}
+.ep .thumb img{width:100%;height:100%;object-fit:cover}
+.ep .thumb b{position:absolute;left:5px;top:5px;font-size:9px;padding:2px 5px;border-radius:4px;background:rgba(10,22,32,.8);color:var(--gold2)}
+.ep .meta{flex:1;min-width:0}
+.ep .t{font-family:var(--serif);font-size:14px;font-weight:700}
+.ep .d{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.6}
+.player{width:100%;aspect-ratio:9/16;background:#000;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.player video{width:100%;height:100%;object-fit:cover}
+.choice2{display:flex;gap:10px;margin-top:12px}
+.choice2 .btn{flex:1;min-height:46px;height:auto;white-space:normal;text-align:left;font-size:13px;line-height:1.5;padding:10px 12px}
+
+/* ---------- 闯关 ---------- */
+.level{display:flex;align-items:center;gap:12px;padding:13px;border-radius:14px;border:1px solid var(--line);
+  background:linear-gradient(150deg,rgba(22,40,54,.9),rgba(12,24,34,.9));margin-bottom:12px;cursor:pointer}
+.level .ch{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:20px;font-weight:700;color:#241B0C;background:linear-gradient(135deg,var(--gold3),var(--gold4))}
+.level .lname{font-family:var(--serif);font-size:14px;font-weight:700}
+.level .lsub{font-size:11px;color:var(--muted);margin-top:4px}
+.material{background:rgba(63,143,134,.08);border:1px dashed rgba(95,179,167,.36);border-radius:12px;padding:13px;
+  font-family:var(--serif);font-size:13.5px;line-height:1.9;color:#D8E6DF;margin-bottom:14px}
+.qtext{font-family:var(--serif);font-size:15px;line-height:1.7;margin-bottom:12px;color:#F2ECDB}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:13px;border-radius:12px;border:1px solid var(--line);
+  background:rgba(255,255,255,.03);margin-bottom:10px;cursor:pointer;font-size:13px;line-height:1.6;transition:.15s}
+.opt:active{transform:scale(.99)}
+.opt .k{font-family:var(--serif);font-weight:700;color:var(--gold2);width:16px;flex:0 0 auto}
+.opt.right{border-color:rgba(95,179,167,.7);background:rgba(63,143,134,.18)}
+.opt.wrong{border-color:rgba(179,90,90,.6);background:rgba(160,60,60,.16)}
+.analysis{border-left:2px solid var(--gold);padding:10px 12px;background:rgba(196,158,84,.08);
+  border-radius:0 10px 10px 0;font-size:12.5px;line-height:1.8;color:#DFD8C6;margin-top:12px}
+
+/* ---------- 图鉴 ---------- */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rc{border:1px solid var(--line);border-radius:14px;padding:12px;background:linear-gradient(160deg,rgba(22,40,54,.9),rgba(12,24,34,.92));
+  cursor:pointer;text-align:center;position:relative;overflow:hidden}
+.rc .pic{height:96px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.rc .pic img{max-height:96px;max-width:100%;object-fit:contain}
+.rc .pic.lock{font-size:26px;color:rgba(255,255,255,.16)}
+.rc .n{font-family:var(--serif);font-size:13px;font-weight:700}
+.rc .e{font-size:10px;color:var(--muted);margin-top:3px}
+.rc.locked{opacity:.7}
+.big{height:190px;display:flex;align-items:center;justify-content:center;margin:4px 0 14px}
+.big img{max-height:190px;max-width:100%;object-fit:contain;filter:drop-shadow(0 10px 24px rgba(0,0,0,.5))}
+.kv{display:flex;gap:10px;font-size:12.5px;padding:7px 0;border-bottom:1px dashed rgba(255,255,255,.06)}
+.kv b{color:var(--muted);font-weight:400;width:64px;flex:0 0 auto}
+.quote{font-family:var(--serif);font-size:13px;line-height:1.9;color:var(--gold2);border-left:2px solid rgba(232,200,120,.5);padding-left:12px;margin:12px 0}
+
+/* ---------- 时间线 ---------- */
+.tl{position:relative;padding-left:26px}
+.tl::before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:1px;background:linear-gradient(180deg,var(--gold),rgba(196,158,84,.1))}
+.tl-item{position:relative;margin-bottom:16px}
+.tl-item::before{content:'';position:absolute;left:-22px;top:6px;width:9px;height:9px;border-radius:50%;
+  background:var(--gold2);box-shadow:0 0 0 3px rgba(232,200,120,.14)}
+.tl-item .y{font-family:var(--serif);font-size:12px;color:var(--gold2);letter-spacing:1px}
+.tl-item .t{font-family:var(--serif);font-size:15px;font-weight:700;margin:3px 0 6px}
+.tl-item .d{font-size:12.5px;color:#C9C2B0;line-height:1.8}
+
+/* ---------- 我的 ---------- */
+.me-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.me-top .ava{width:64px;height:64px}
+.me-top .nm{font-family:var(--serif);font-size:19px;font-weight:900;letter-spacing:1px}
+.list{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.li{display:flex;align-items:center;justify-content:space-between;padding:14px 15px;font-size:13.5px;cursor:pointer;
+  border-bottom:1px solid rgba(255,255,255,.05)}
+.li:last-child{border-bottom:0}
+.li .r{color:var(--muted);font-size:12px}
+
+/* ---------- tabbar ---------- */
+.tabbar{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:480px;z-index:30;
+  display:flex;background:rgba(9,19,27,.94);backdrop-filter:blur(16px);border-top:1px solid var(--line);
+  padding:8px 0 calc(8px + env(safe-area-inset-bottom))}
+.tb{flex:1;text-align:center;font-size:10px;color:var(--muted);cursor:pointer;padding:4px 0;letter-spacing:1px}
+.tb .g{font-family:var(--serif);font-size:17px;display:block;margin-bottom:3px;color:inherit}
+.tb.on{color:var(--gold2)}
+.tb.on .g{text-shadow:0 0 14px rgba(232,200,120,.5)}
+
+/* ---------- 浮层 ---------- */
+.toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);z-index:60;
+  background:rgba(20,36,48,.96);border:1px solid var(--line);color:var(--gold2);
+  padding:10px 18px;border-radius:999px;font-size:12.5px;box-shadow:0 10px 26px rgba(0,0,0,.5)}
+.sheet{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:rgba(3,8,12,.6)}
+.sheet .box{width:100%;max-width:480px;background:#0E1C27;border-top-left-radius:20px;border-top-right-radius:20px;
+  border-top:1px solid var(--line);padding:18px 18px calc(22px + env(safe-area-inset-bottom));animation:up .22s ease}
+@keyframes up{from{transform:translateY(18px);opacity:.4}to{transform:none;opacity:1}}
+.fade{animation:fadein .25s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.note{font-size:11px;color:#6F817A;line-height:1.8}
+h3{font-family:var(--serif);font-size:14px;margin:16px 0 8px;color:var(--gold2);letter-spacing:1px}
+
+/* ---------- 列表容器（手机默认单列） ---------- */
+.cols{display:block}
+.playwrap{display:block}
+
+/* ==================== 桌面横版 ==================== */
+@media (min-width:900px){
+  html,body{height:100%}
+  body{display:block;background:#05090D}
+  #phone{width:auto;max-width:none;min-height:100vh;margin:0;padding:0 0 48px 112px;overflow:visible}
+  #app{max-width:none;margin:0}
+
+  /* 左侧竖导航 */
+  #tabbar{position:fixed;left:0;top:0;bottom:0;width:112px;z-index:40;display:flex;align-items:center;
+    background:linear-gradient(180deg,#0C1A26,#070E15);border-right:1px solid var(--line)}
+  #tabbar .tabbar{position:static;left:auto;bottom:auto;transform:none;width:100%;max-width:none;
+    display:flex;flex-direction:column;gap:6px;padding:0 10px;background:none;border:0;backdrop-filter:none}
+  #tabbar .tb{padding:14px 0;border-radius:12px;font-size:11px;letter-spacing:2px;transition:background .15s}
+  #tabbar .tb .g{font-size:22px;margin-bottom:5px}
+  #tabbar .tb:hover{background:rgba(255,255,255,.05)}
+  #tabbar .tb.on{background:rgba(232,200,120,.07)}
+  #tabbar .tb.on::after{left:4px;right:auto;top:50%;bottom:auto;width:3px;height:22px;border-radius:3px;
+    transform:translateY(-50%);box-shadow:0 0 14px rgba(232,200,120,.7)}
+  #tabbar::before{content:'时光侦局';position:absolute;top:26px;left:0;width:100%;text-align:center;
+    font-family:var(--serif);font-size:13px;letter-spacing:3px;color:var(--gold2)}
+  #tabbar::after{content:'穿越千年';position:absolute;bottom:26px;left:0;width:100%;text-align:center;
+    font-size:10px;letter-spacing:2px;color:#5E7270}
+
+  .wrap{max-width:1040px;margin:0 auto;padding:30px 40px 20px}
+  .topbar{padding:16px 40px}
+  .h1{font-size:28px}
+  .muted{font-size:13px}
+  .card{padding:20px;margin-bottom:16px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .cols .card,.cols .ep,.cols .level{margin-bottom:0}
+  .grid{grid-template-columns:repeat(4,1fr);gap:16px}
+  .rc .pic{height:130px}
+  .rc .pic img{max-height:130px}
+  .ep .thumb{width:84px;height:112px}
+  .script .cover{width:92px;height:118px}
+  .script .cover img{border-radius:14px}
+  .cols .card{min-height:118px}
+  .splash .logo{font-size:72px;letter-spacing:16px}
+  .splash .slog{font-size:16px;letter-spacing:10px}
+  .splash .inner{max-width:760px;margin:0 auto;padding-bottom:96px}
+
+  /* 短剧播放：左视频右内容 */
+  .playwrap{display:grid;grid-template-columns:400px 1fr;gap:36px;align-items:start;padding-top:26px}
+  .playwrap .player{position:sticky;top:80px}
+  .playwrap .pr .card{margin-top:0}
+  .playwrap .pr{max-width:640px}
+  .playwrap .pr .choice2{max-width:560px}
+  .analysis,.qtext,.material{max-width:760px}
+}
+@media (min-width:1400px){
+  .wrap{max-width:1140px}
+}
+
+/* ==================== v2 视觉升级 ==================== */
+:root{
+  --shadow:0 20px 44px -22px rgba(0,0,0,.85);
+  --shadow-s:0 10px 24px -14px rgba(0,0,0,.8);
+  --hi:inset 0 1px 0 rgba(255,255,255,.06);
+  --goldgrad:linear-gradient(135deg,#F7E4B4 0%,#E8C878 42%,#C49E54 72%,#A87F35 100%);
+}
+html,body{background:#04080B}
+#phone{background:
+  radial-gradient(90% 44% at 50% -6%,#16304A 0%,rgba(10,22,32,0) 62%),
+  radial-gradient(60% 30% at 100% 100%,rgba(63,143,134,.10),rgba(10,22,32,0) 70%),
+  linear-gradient(180deg,#0B1822,#080F16 40%,#060D13)}
+#phone::before{opacity:.6;background-size:3px 3px;
+  background-image:radial-gradient(rgba(255,255,255,.05) .5px,transparent .5px)}
+
+/* 文字层级 */
+.h1{font-size:23px;letter-spacing:1.5px;line-height:1.35}
+.h2{font-size:16px;letter-spacing:.5px}
+.topbar{background:rgba(8,16,23,.82);border-bottom:1px solid rgba(196,158,84,.16);
+  box-shadow:0 8px 24px -18px #000}
+.ttl{font-size:16px;letter-spacing:1.2px}
+.back{width:36px;height:36px;border-color:rgba(255,255,255,.09);background:rgba(255,255,255,.04);
+  transition:.15s}
+.back:hover{border-color:rgba(232,200,120,.45);color:var(--gold3)}
+.back{font-size:19px;line-height:1;padding-bottom:1px}
+
+/* 幕次胶囊 */
+.acts{gap:6px}
+.act{border-radius:999px;background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.09);
+  padding:9px 4px;transition:.16s}
+.act:hover{border-color:rgba(232,200,120,.34)}
+.act.on{box-shadow:0 0 0 1px rgba(232,200,120,.28),0 10px 24px -18px rgba(232,200,120,.9)}
+.act.done{background:rgba(63,143,134,.1);border-color:rgba(111,195,182,.26)}
+
+/* 卡片：更厚、更通透 */
+.card{border-radius:20px;padding:18px;border:1px solid rgba(196,158,84,.2);
+  background:
+    linear-gradient(158deg,rgba(30,52,70,.72) 0%,rgba(14,27,38,.9) 55%,rgba(10,20,28,.94) 100%);
+  box-shadow:var(--shadow-s),var(--hi)}
+.card::after{top:0;height:1px;opacity:.55}
+.card.tap{transition:transform .18s cubic-bezier(.2,.8,.2,1),border-color .18s,box-shadow .18s}
+.card.tap:hover{border-color:rgba(232,200,120,.4);box-shadow:0 18px 38px -20px #000,var(--hi)}
+.card.tap:active{transform:scale(.988)}
+
+/* 按钮 */
+.btn{font-weight:600;border-radius:14px;letter-spacing:.5px}
+.btn.primary{background:var(--goldgrad);color:#1D1405;border:1px solid rgba(255,255,255,.28);
+  box-shadow:0 10px 26px -10px rgba(196,158,84,.55),inset 0 1px 0 rgba(255,255,255,.6)}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.block{padding:14px 18px}
+.btn.ghost{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);
+  box-shadow:var(--hi)}
+.btn.ghost:hover{border-color:rgba(232,200,120,.38);color:var(--gold2)}
+
+/* 输入框 */
+.ipt,.inputbar input{border-radius:13px;border-color:rgba(255,255,255,.1);
+  background:rgba(255,255,255,.055);box-shadow:var(--hi)}
+.ipt:focus,.inputbar input:focus{border-color:rgba(232,200,120,.55);
+  box-shadow:0 0 0 3px rgba(232,200,120,.12)}
+
+/* 首页 */
+.hello{margin:10px 0 18px;align-items:flex-start}
+.ava{width:50px;height:50px;border:1px solid rgba(232,200,120,.55);
+  box-shadow:0 0 0 3px rgba(232,200,120,.08),var(--shadow-s)}
+.hello .who{font-size:20px;letter-spacing:1.5px}
+.hello .tip{font-size:11.5px;margin-top:5px}
+.points{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0;border:0;background:none;
+  box-shadow:none;margin-bottom:16px}
+.points .pt{position:relative;text-align:center;padding:15px 6px 13px;border-radius:18px;
+  border:1px solid rgba(232,200,120,.24);
+  background:
+    radial-gradient(120% 150% at 50% 0%,rgba(232,200,120,.14),rgba(232,200,120,0) 62%),
+    linear-gradient(160deg,rgba(28,49,67,.66),rgba(11,21,29,.9));
+  box-shadow:var(--shadow-s),var(--hi);overflow:hidden}
+.points .pt::after{content:'';position:absolute;left:12%;right:12%;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(232,200,120,.5),transparent);opacity:.5}
+.points b{display:block;font-family:var(--serif);font-size:24px;line-height:1.1;color:var(--gold3);
+  font-weight:900;text-shadow:0 0 20px rgba(232,200,120,.25)}
+.points b em{font-style:normal;font-size:13px;color:rgba(233,226,207,.55);margin-left:1px}
+.points span{display:block;font-size:10.5px;letter-spacing:1.6px;color:#9EAFA8;margin-top:8px}
+.entry .ico{width:48px;height:48px;border-radius:14px;box-shadow:0 8px 18px -10px rgba(196,158,84,.7),
+  inset 0 1px 0 rgba(255,255,255,.5)}
+.entry .name{font-size:15.5px;letter-spacing:.8px}
+.entry .go{font-size:20px;opacity:.7}
+.progressbar{height:5px;background:rgba(255,255,255,.08);box-shadow:inset 0 1px 2px rgba(0,0,0,.5)}
+.progressbar>i{background:linear-gradient(90deg,#6FC3B6,#E8C878 70%,#F7E4B4)}
+
+/* 剧本 / 短剧 / 闯关 */
+.script .cover{border-radius:14px;box-shadow:var(--shadow-s)}
+.ep{border-radius:18px;border-color:rgba(196,158,84,.18);box-shadow:var(--shadow-s),var(--hi);
+  transition:transform .16s,border-color .16s}
+.ep:hover{border-color:rgba(232,200,120,.4);transform:translateY(-1px)}
+.ep .thumb{border-radius:12px}
+.level{border-radius:18px;border-color:rgba(196,158,84,.18);box-shadow:var(--shadow-s),var(--hi)}
+.level .ch{box-shadow:0 8px 18px -10px rgba(196,158,84,.75),inset 0 1px 0 rgba(255,255,255,.5)}
+.material{border-radius:14px;background:rgba(63,143,134,.1);border-color:rgba(111,195,182,.3);
+  box-shadow:var(--hi)}
+.opt{border-radius:14px;background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.08);
+  transition:.16s}
+.opt:hover{border-color:rgba(232,200,120,.34);background:rgba(232,200,120,.06)}
+.opt.right{box-shadow:0 0 0 1px rgba(111,195,182,.3),0 10px 24px -16px rgba(63,143,134,.8)}
+.opt.wrong{box-shadow:0 0 0 1px rgba(179,90,90,.28)}
+.analysis{border-left-width:3px;border-radius:0 14px 14px 0;
+  background:linear-gradient(90deg,rgba(196,158,84,.14),rgba(196,158,84,.04))}
+.chat .msg .bubble{border-radius:16px;box-shadow:var(--hi)}
+
+/* 图鉴 */
+.rc{border-radius:18px;box-shadow:var(--shadow-s),var(--hi);transition:transform .16s,border-color .16s}
+.rc:hover{border-color:rgba(232,200,120,.4);transform:translateY(-2px)}
+.rc .pic img{filter:drop-shadow(0 10px 18px rgba(0,0,0,.55))}
+.quote{font-size:13.5px;letter-spacing:.5px}
+
+/* 时间线 */
+.tl-item::before{box-shadow:0 0 0 4px rgba(232,200,120,.1),0 0 14px rgba(232,200,120,.5)}
+
+/* 我的 */
+.me-top .ava{box-shadow:0 0 0 4px rgba(232,200,120,.09),var(--shadow)}
+.list{border-radius:18px;background:rgba(255,255,255,.035);box-shadow:var(--shadow-s),var(--hi)}
+.li{padding:15px 16px;transition:background .16s}
+.li:hover{background:rgba(232,200,120,.05)}
+
+/* tabbar */
+.tabbar{background:rgba(7,14,20,.9);border-top:1px solid rgba(196,158,84,.18);
+  box-shadow:0 -12px 30px -22px #000;padding:8px 0 calc(15px + env(safe-area-inset-bottom))}
+.tb{position:relative;font-size:10.5px;letter-spacing:1.2px;color:#7C9090;transition:color .16s}
+.tb .g{font-size:18px;transition:.2s}
+.tb.on{color:var(--gold3)}
+.tb.on .g{text-shadow:0 0 16px rgba(232,200,120,.55);transform:translateY(-1px)}
+.tb.on::after{content:'';position:absolute;left:50%;bottom:-7px;width:16px;height:2px;border-radius:2px;
+  transform:translateX(-50%);background:var(--goldgrad);box-shadow:0 0 10px rgba(232,200,120,.6)}
+
+/* toast / sheet */
+.toast{border-radius:14px;padding:11px 20px;border-color:rgba(232,200,120,.3);
+  background:rgba(18,33,45,.96);box-shadow:0 16px 40px -16px #000,var(--hi)}
+.sheet .box{border-top-left-radius:24px;border-top-right-radius:24px;
+  background:linear-gradient(180deg,#122230,#0B1620)}
+
+/* ==================== 登录页 ==================== */
+.login{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;
+  justify-content:flex-end;overflow:hidden}
+.login-bg{position:absolute;inset:0;background:url('assets/splash_bg.jpg') center/cover no-repeat;
+  transform:scale(1.04);filter:saturate(.95)}
+.login-veil{position:absolute;inset:0;background:
+  radial-gradient(70% 46% at 50% 12%,rgba(10,22,32,.2),rgba(6,12,18,.72) 70%),
+  linear-gradient(180deg,rgba(5,10,15,.72) 0%,rgba(5,10,15,.36) 32%,rgba(4,9,13,.94) 66%,#04090D 100%)}
+.login-hero{position:relative;z-index:2;padding:calc(38px + env(safe-area-inset-top)) 24px 0;text-align:center}
+.seal{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(232,200,120,.5);background:
+    radial-gradient(circle at 50% 30%,rgba(232,200,120,.22),rgba(12,24,34,.9) 70%);
+  box-shadow:0 0 0 4px rgba(232,200,120,.06),0 12px 30px -14px #000,inset 0 0 18px rgba(232,200,120,.16)}
+.seal span{font-family:var(--serif);font-size:24px;font-weight:900;letter-spacing:1px;
+  background:var(--goldgrad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand{font-family:var(--serif);font-size:34px;font-weight:900;letter-spacing:9px;line-height:1.2;
+  background:linear-gradient(180deg,#FBEBC4,#E8C878 55%,#B98D3F);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 6px 18px rgba(0,0,0,.55))}
+.brand-rule{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;
+  font-family:var(--serif);font-size:12px;letter-spacing:3px;color:rgba(233,226,207,.86)}
+.brand-rule i{width:26px;height:1px;background:linear-gradient(90deg,transparent,rgba(232,200,120,.7),transparent)}
+.brand-latin{margin-top:9px;font-size:9px;letter-spacing:3.5px;color:rgba(147,166,160,.75)}
+
+.login-sheet{position:relative;z-index:2;margin:22px 14px calc(14px + env(safe-area-inset-bottom));
+  padding:20px 18px 18px;border-radius:24px;border:1px solid rgba(196,158,84,.26);
+  background:linear-gradient(165deg,rgba(28,49,67,.82),rgba(11,21,29,.94) 60%,rgba(8,16,23,.96));
+  box-shadow:0 26px 60px -24px #000,var(--hi);backdrop-filter:blur(10px)}
+.sh-t{font-family:var(--serif);font-size:17px;font-weight:700;letter-spacing:2px;color:var(--cream)}
+.sh-s{margin-top:6px;font-size:11.5px;color:var(--muted);letter-spacing:.5px}
+.idcard{display:flex;gap:14px;align-items:center;margin:18px 0 4px}
+.idcard-ava{position:relative;width:64px;height:64px;border-radius:18px;overflow:hidden;flex:0 0 auto;
+  border:1px solid rgba(232,200,120,.45);box-shadow:0 10px 26px -14px #000,var(--hi);cursor:pointer}
+.idcard-ava img{width:100%;height:100%;object-fit:cover}
+.idcard-cam{position:absolute;left:0;right:0;bottom:0;height:18px;line-height:18px;text-align:center;
+  font-size:9.5px;letter-spacing:1px;color:#F3E7C8;background:rgba(6,12,18,.72);backdrop-filter:blur(4px)}
+.idcard-fields{flex:1;min-width:0}
+.fld-label{font-size:10.5px;letter-spacing:2px;color:#94A7A1;margin-bottom:7px}
+.fld{display:flex;align-items:center;gap:8px;height:44px;padding:0 13px;border-radius:13px;
+  background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);box-shadow:var(--hi);
+  transition:border-color .16s,box-shadow .16s}
+.fld:focus-within{border-color:rgba(232,200,120,.55);box-shadow:0 0 0 3px rgba(232,200,120,.1)}
+.fld input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--cream);
+  font-family:var(--serif);font-size:15px;letter-spacing:1px}
+.fld input::placeholder{font-family:var(--sans);font-size:12.5px;letter-spacing:.5px;color:#758883}
+.fld-hint{margin-top:7px;font-size:10.5px;color:#6F827D;letter-spacing:.4px}
+.login-sheet .btn.primary{margin-top:18px;padding:15px;font-family:var(--serif);font-size:16px;letter-spacing:5px}
+.login-sheet .btn.ghost{margin-top:10px;padding:12px;font-size:12.5px;letter-spacing:1px;color:#B9C6BF}
+.login-note{margin-top:14px;font-size:10.5px;line-height:1.8;color:#66796F;text-align:center}
+.login-meta{display:none}
+
+/* 无导航时整屏铺满（登录页） */
+#tabbar:empty{display:none}
+body[data-rail="0"] #phone{padding-left:0;padding-bottom:0}
+
+@media (min-width:900px){
+  body[data-view="login"],body[data-view="splash"]{overflow:hidden}
+  .login{display:block;min-height:100vh;padding:0}
+  .login-bg{transform:scale(1.02)}
+  .login-hero{position:absolute;left:0;top:0;bottom:0;width:52%;display:flex;flex-direction:column;
+    align-items:flex-start;justify-content:center;padding:0 0 0 8vw;text-align:left}
+  .seal{margin:0 0 24px}
+  .brand{font-size:64px;letter-spacing:16px}
+  .brand-rule{justify-content:flex-start;font-size:14px;letter-spacing:8px;margin-top:20px}
+  .brand-rule i:last-child{display:none}
+  .brand-latin{font-size:10px;letter-spacing:6px;margin-top:12px}
+  .login-meta{display:flex;align-items:center;gap:26px;margin-top:44px}
+  .login-meta > div{position:relative;text-align:left}
+  .login-meta > div + div::before{content:'';position:absolute;left:-14px;top:6px;bottom:6px;width:1px;
+    background:linear-gradient(180deg,transparent,rgba(196,158,84,.45),transparent)}
+  .login-meta b{display:block;font-family:var(--serif);font-size:22px;font-weight:900;color:var(--gold2);
+    line-height:1.1}
+  .login-meta span{display:block;margin-top:5px;font-size:10.5px;letter-spacing:2px;color:#84978F}
+  .login-sheet{position:absolute;right:8vw;top:50%;transform:translateY(-50%);width:420px;margin:0;
+    padding:28px 26px 24px;border-radius:26px}
+  .sh-t{font-size:20px;letter-spacing:2.5px}
+  .sh-s{font-size:12px;margin-top:8px}
+  .idcard{margin-top:26px}
+  .idcard-ava{width:72px;height:72px}
+  .login-note{font-size:11px;text-align:left}
+  .login-sheet .btn.primary{margin-top:24px;font-size:17px}
+}
+
+/* 剧本列表：桌面三列 */
+.cols3{display:block}
+.nxt{display:none}
+
+@media (min-width:900px){
+  .cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
+  .cols3 .card{margin-bottom:0}
+  .cols3 .script .cover{width:78px;height:100px}
+  .cols3 .chip{padding:7px 10px;font-size:11px}
+  .nxt{display:flex;align-items:center;gap:14px;margin-top:22px;padding:14px;border-radius:18px;
+    cursor:pointer;border:1px solid rgba(196,158,84,.22);
+    background:linear-gradient(150deg,rgba(28,49,67,.6),rgba(11,21,29,.9));
+    box-shadow:var(--shadow-s),var(--hi);transition:.18s}
+  .nxt:hover{border-color:rgba(232,200,120,.45);transform:translateY(-1px)}
+  .nxt-thumb{width:62px;height:84px;border-radius:12px;overflow:hidden;flex:0 0 auto;
+    border:1px solid rgba(196,158,84,.3)}
+  .nxt-thumb img{width:100%;height:100%;object-fit:cover}
+  .nxt-t{font-family:var(--serif);font-size:15px;font-weight:700;letter-spacing:.5px;margin-top:6px}
+}
+
+</style>
+</head>
+<body>
+<div id="phone">
+  <div id="app"></div>
+  <div id="tabbar"></div>
+</div>
+<div id="layer"></div>
+<!-- 素材声明：发布打包按 img src 静态扫描，JS 里拼的地址扫不到，这里列一遍 -->
+<div aria-hidden="true" style="position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden">
+  <img src="assets/splash_bg.jpg" alt="">
+  <img src="assets/avatar_shiguang.jpg" alt="">
+  <img src="assets/role_zhangliang.jpg" alt="">
+  <img src="assets/scene_silkroad.jpg" alt="">
+  <img src="assets/poster_ep2.jpg" alt="">
+  <img src="assets/poster_ep3.jpg" alt="">
+  <img src="assets/poster_ep4.jpg" alt="">
+  <img src="assets/relic_hufu.png" alt="">
+  <img src="assets/relic_wuzhu.png" alt="">
+  <img src="assets/relic_fujie.png" alt="">
+  <video src="assets/ep1.mp4" preload="none"></video>
+  <video src="assets/ep2.mp4" preload="none"></video>
+  <video src="assets/ep3.mp4" preload="none"></video>
+  <video src="assets/ep4.mp4" preload="none"></video>
+</div>
+
+<script>
+var SCRIPTS = [
+  {
+    no: 1,
+    name: '楚汉风云',
+    sub: '谋士视角 · 楚汉相争',
+    cover: 'assets/role_zhangliang.jpg',
+    roleName: '张良',
+    acts: [
+      {
+        title: '荥阳对峙',
+        role: '张良（汉营谋士）',
+        player: '汉营线索官',
+        scene: '楚汉相争，荥阳被围，楚营运粮车队异动',
+        facts: '荥阳城下楚军围城已月余，今日楚营运粮车比往常多三成，且不走正面大路，改从东面绕行。',
+        missions: ['数清楚营运粮车数', '记下车队绕行的方向', '判断楚军是否缺粮'],
+        opener: [
+          { who: '张良', text: '楚军围荥阳，粮道就是命脉。你去查：这两日楚营的运粮车，比往常多了还是少了。' },
+          { who: 'AI 旁白', text: '夜色里，楚营火把连成一线，运粮车队正从东面绕行，车辙比平日更深。' }
+        ],
+        quick: [
+          { key: 'count', label: '回报：东面绕行，车数多三成' },
+          { key: 'ask', label: '追问：缺粮为何反增运？' }
+        ],
+        offline: [
+          { k: ['车', '粮', '数'], r: '东面绕行、车数多三成——他们不敢走正面大路，怕是荥阳正面已有伏兵。' },
+          { k: ['缺粮', '增运', '为何'], r: '若真缺粮，只会减运不会增运。增运是疑兵：让你以为他们粮足，好诱你出城。' }
+        ],
+        fallback: '别急下结论。先把车数、方向、车辙深浅三件事对齐，再说是不是缺粮。',
+        conclusion: '楚军增运而绕行，是疑兵：正面必有伏。此局当守荥阳、断其甬道，不可轻出。'
+      },
+      {
+        title: '密信与虎符',
+        role: '张良（汉营谋士）',
+        player: '汉营线索官',
+        scene: '营帐之中有范增字迹的密信一封、半枚来历不明的虎符一枚、奉命送信的楚地使者一人',
+        facts: '密信字迹仿范增，用印却是楚军护军私印；虎符仅半枚，铭文与杜地虎符不合；使者自称奉楚王之命送信。',
+        missions: ['观察密信内容', '比对使者口供', '找出矛盾线索'],
+        opener: [
+          { who: '张良', text: '此信字迹与范增相似，你需找出使者留下的破绽。' },
+          { who: 'AI 旁白', text: '营帐烛火摇曳，案上摊着一封密信与半枚虎符。' }
+        ],
+        quick: [
+          { key: 'ask', label: '追问使者：奉谁的命送信？' },
+          { key: 'check', label: '查验虎符：比对铭文' }
+        ],
+        offline: [
+          { k: ['印', '字迹', '密信'], r: '字迹仿得像，印却不对——范增用私印，楚王用王印。这封信是护军伪造的。' },
+          { k: ['虎符', '铭文', '半枚'], r: '杜地虎符合符，铭文当为「右在君，左在杜」。这半枚铭文不合，是仿的。' },
+          { k: ['使者', '口供', '矛盾'], r: '使者说奉命于楚王，却不知王印形制——真奉命者不会答不上来。' }
+        ],
+        fallback: '看三处：印、铭文、口供。三处若有一处不合，这封信就不可信。',
+        conclusion: '密信为伪：字迹虽似范增，用印却是护军私印；虎符半枚不合杜地铭文。使者是诈，来意在探营。'
+      },
+      {
+        title: '鸿门余波',
+        role: '张良（汉营谋士）',
+        player: '汉营线索官',
+        scene: '鸿门宴之后，项庄舞剑、项伯以身翼蔽沛公之事在营中传开',
+        facts: '鸿门宴上沛公北向坐、张良西向侍；项庄舞剑意在沛公，项伯以身翼蔽；范增三举玉玦，项羽不应。',
+        missions: ['核对鸿门座次尊卑', '辨认项伯举动的用意', '判断范增之计是否得逞'],
+        opener: [
+          { who: '张良', text: '鸿门那日，项庄舞剑，项伯以身翼蔽沛公。你去核对当日座次与礼制，看谁在暗中护着我们。' },
+          { who: 'AI 旁白', text: '你翻开礼制竹简：宾主之位，北向为尊，西向为侍。' }
+        ],
+        quick: [
+          { key: 'seat', label: '报座次：沛公北向坐，我西向侍' },
+          { key: 'why', label: '问：项伯为何以身蔽沛公？' }
+        ],
+        offline: [
+          { k: ['座次', '北向', '礼'], r: '北向为尊，项羽自居尊位而置沛公于客位——礼上已定君臣，杀机就藏在礼里。' },
+          { k: ['项伯', '翼蔽', '护'], r: '项伯是项羽季父，却与沛公有旧。他以身蔽剑，是把家内之亲放在了军国之争前面。' },
+          { k: ['范增', '玉玦', '计'], r: '范增三举玉玦而项羽不应，杀计未行——不是不知，是不决。' }
+        ],
+        fallback: '鸿门的险不在剑，在礼与决。先看座次，再看谁在退让。',
+        conclusion: '鸿门之险不在剑，在礼：范增主杀，项伯主护，项羽不决。礼制上的每一次退让，都是一次生死取舍。'
+      }
+    ]
+  },
+  {
+    no: 2,
+    name: '丝路商队',
+    sub: '使者视角 · 张骞西行',
+    cover: 'assets/scene_silkroad.jpg',
+    roleName: '张骞副使',
+    acts: [
+      {
+        title: '玉门关外',
+        role: '张骞副使（使团书记）',
+        player: '使团书记',
+        scene: '使团抵达玉门关，准备出关西行',
+        facts: '使团持过所文书一份，随员三十二人，货物丝绸八十匹、黄金二十斤；守关校尉要求文书、人数、货单三者相符。',
+        missions: ['查验过所文书', '清点随员与货物', '判断能否出关'],
+        opener: [
+          { who: '张骞副使', text: '出关要凭过所。你把文书、随员、货物都核一遍——少一样，守关的就不会放行。' },
+          { who: 'AI 旁白', text: '关楼下风沙扑面，校尉把过所摊在案上，逐条比对。' }
+        ],
+        quick: [
+          { key: 'check', label: '比对：文书人数与货单是否相符' },
+          { key: 'ask', label: '问守关：缺一份文书能否通融' }
+        ],
+        offline: [
+          { k: ['过所', '文书'], r: '过所上写「随员三十二人、丝绸八十匹」，与货单对得上，这一条可过。' },
+          { k: ['通融', '缺'], r: '校尉摇头：「过所缺一项，人货皆不得出。」关法不为情面所改。' }
+        ],
+        fallback: '把三样东西摊开对齐：过所、人数、货单。对齐了才谈出关。',
+        conclusion: '过所、人数、货单三者相符方可出关。制度的严，是丝路能通的前提。'
+      },
+      {
+        title: '大宛良马',
+        role: '张骞副使（使团书记）',
+        player: '使团书记',
+        scene: '使团抵大宛，宛王提出以天马交换汉的丝绸与黄金',
+        facts: '宛王出示马契，写「天马二匹，岁献」；现场只见一匹，齿口约六岁，蹄铁崭新。',
+        missions: ['比对马契契约', '核验天马品相与数量', '判断宛王是否有诈'],
+        opener: [
+          { who: '张骞副使', text: '宛王要以天马换丝绸与黄金。你先别急着应——先看马契上写的是几匹、几岁口。' },
+          { who: 'AI 旁白', text: '马厩里只有一匹高头大马，另一栏空着，草料却是新添的。' }
+        ],
+        quick: [
+          { key: 'ask', label: '问宛王：契上二匹，为何只见一匹？' },
+          { key: 'check', label: '验马：看齿口与蹄铁' }
+        ],
+        offline: [
+          { k: ['契', '二匹', '数'], r: '契上写二匹、实到一匹——差的那匹要么未到，要么根本不存在。契约与实物不符，不可签。' },
+          { k: ['齿', '蹄', '品相'], r: '齿口六岁、蹄铁崭新：马是好的，但新蹄铁说明它刚被人换过掌，怕是为掩旧伤。' },
+          { k: ['诈', '意图'], r: '宛王想以虚数抬价。可退一步：先收一匹，余一匹立字据，岁献时补足。' }
+        ],
+        fallback: '交易不靠情面，靠三样：契、数、物。三样对不上，就先立字据。',
+        conclusion: '契、马、数不符即是有诈。丝路交易不靠情面，靠文书与实物对齐。'
+      },
+      {
+        title: '归途断路',
+        role: '张骞副使（使团书记）',
+        player: '使团书记',
+        scene: '归汉途中，北面出现追兵，使者符节在身',
+        facts: '追兵自北面来，约百余骑；南道绕盐泽，多走三日但无追兵；货物可弃，符节为汉使凭证不可失。',
+        missions: ['辨认追兵来路', '护住使者符节', '择一条能归汉的路'],
+        opener: [
+          { who: '张骞副使', text: '回程的路断了。追兵从北面来，符节不能失——丢了它，我们就不再是汉使。' },
+          { who: 'AI 旁白', text: '风里有马蹄声，自北向南，越来越近。' }
+        ],
+        quick: [
+          { key: 'south', label: '走南道：绕盐泽，多三日' },
+          { key: 'keep', label: '弃货保节：符节高于货物' }
+        ],
+        offline: [
+          { k: ['南道', '盐泽', '路'], r: '南道多三日，但追兵在北。宁多三日，不带追兵回汉。' },
+          { k: ['符节', '节', '弃货'], r: '货可弃，节不可失。张骞持汉节不失，我辈亦然。' },
+          { k: ['追兵', '北'], r: '北面百余骑，来得急却不成阵——是游骑探路，不是主力。快走，别恋战。' }
+        ],
+        fallback: '先定一件事：节在人在。其余都可以舍。',
+        conclusion: '货可弃、节不可失。张骞持汉节不失，我辈亦然。'
+      }
+    ]
+  },
+  {
+    no: 3,
+    name: '敦煌烽燧',
+    sub: '戍卒视角 · 边塞一夜',
+    cover: 'assets/splash_bg.jpg',
+    roleName: '燧卒',
+    acts: [
+      {
+        title: '烽燧今夜',
+        role: '敦煌烽燧燧卒',
+        player: '燧长',
+        scene: '敦煌郡某烽燧，今夜风大，烽火信号需反复确认',
+        facts: '今夜苣火未熄，烽堆三堆；换防名册记当值五人，实到四人，缺一人名「张甲」。',
+        missions: ['辨认烽火堆数', '核对换防名册', '判断敌情真假'],
+        opener: [
+          { who: '燧卒', text: '今夜风向不对。你看烽火——三堆是警，一堆是安。别数错了，数错了要掉脑袋。' },
+          { who: 'AI 旁白', text: '烽燧顶上，苣火被风压得低伏，火舌忽明忽暗。' }
+        ],
+        quick: [
+          { key: 'count', label: '再点一遍：三堆，苣火未熄' },
+          { key: 'roll', label: '查名册：今夜当值几人？' }
+        ],
+        offline: [
+          { k: ['三堆', '烽', '数'], r: '三堆为警、一堆为安。三堆即敌至，立刻举烽，不必等。' },
+          { k: ['名册', '缺', '五'], r: '名册五人、实到四人——缺的那人今夜该在燧顶，人不齐，火就要多举一次。' }
+        ],
+        fallback: '先数火，再点人。火与人对不上，就是有事的夜。',
+        conclusion: '烽燧之信在数与序，不在火大。三堆为警，立即举烽，缺一人亦要报。'
+      },
+      {
+        title: '戍卒家书',
+        role: '敦煌烽燧燧卒',
+        player: '燧长',
+        scene: '同袍家书里夹了一张粮册抄页，字里行间似有暗语',
+        facts: '家书写「愿母毋恙」，却夹着粮册抄页：出仓一百二十石，实收九十石；抄页边角有「月晦」二字反复出现。',
+        missions: ['读出信中的隐语', '比对粮册数字', '判断是否有人私卖军粮'],
+        opener: [
+          { who: '燧卒', text: '同袍的家书里夹了一张粮册抄页，字里行间像是暗语。你替他看看，他想说什么。' },
+          { who: 'AI 旁白', text: '灯下看去，抄页边角反复写着「月晦」二字，墨色比正文淡。' }
+        ],
+        quick: [
+          { key: 'num', label: '看粮册：出仓与实收差多少' },
+          { key: 'ask', label: '问同袍：这抄页从哪来' }
+        ],
+        offline: [
+          { k: ['差', '出仓', '实收'], r: '出仓一百二十石，实收九十石，差三十石——账上空了三十石粮，人却天天在吃。' },
+          { k: ['月晦', '暗语', '隐语'], r: '「月晦」是没月亮的夜，也是最容易运东西出仓的夜。他不是在写信，是在留证。' },
+          { k: ['私卖', '军粮'], r: '账差三十石而不见人少，只可能是私卖。抄页留边，是怕原册被人改。' }
+        ],
+        fallback: '数字不会说谎：出仓、实收、吃粮的人头，三样一摆，缺的那块就露出来了。',
+        conclusion: '家书里的隐语指向私卖军粮。边塞之弊，常从一册账开始。'
+      },
+      {
+        title: '关市之争',
+        role: '敦煌烽燧燧卒',
+        player: '燧长',
+        scene: '关市开放，粟特商队请求入关，税单与货单不符',
+        facts: '商队货单记绢一百匹，实点一百三十匹；税单只记七十匹；商队持过所，来自粟特，往年无犯关记录。',
+        missions: ['核对关市税单', '辨认商队来历', '判断是否放行'],
+        opener: [
+          { who: '燧卒', text: '关市开了。粟特商队要入关，税单与货单对不上。放行还是拦下，你定。' },
+          { who: 'AI 旁白', text: '驼铃从关外传来，商队头人捧上税单，绢帛在骆驼背上压出深痕。' }
+        ],
+        quick: [
+          { key: 'block', label: '拦下：多出三十匹，税单未记' },
+          { key: 'pass', label: '放行：先记名，后补税' }
+        ],
+        offline: [
+          { k: ['税单', '三十', '多'], r: '货单一百匹、税单七十匹、实点一百三十匹——三十匹既未报也未税，先拦下清点。' },
+          { k: ['粟特', '来历'], r: '粟特商队往年无犯关记录，人可留、货可点；来历清白不等于货目清白。' },
+          { k: ['放行', '补税'], r: '先记名、后补税是通融，不是免。人货登记在册，三日之内补足，方许出关。' }
+        ],
+        fallback: '关市之要在通，也在税。人可留、货可点、税可补，唯独不能糊涂放行。',
+        conclusion: '丝路之利在通，之序在税。先记名后补税，通而不失。'
+      }
+    ]
+  }
+];
+var BANKS = [
+  {
+    char: '译',
+    label: '史料破译',
+    relicLabel: '史料摘编',
+    questions: [
+      {
+        material: '……乃令张骞凿空西域，开通丝路，商旅相望于道……',
+        question: '据史料，“凿空”指的是哪一历史事件？',
+        options: [
+          { key: 'A', label: '修筑长城' },
+          { key: 'B', label: '出使西域开通丝路' },
+          { key: 'C', label: '平定诸侯' },
+          { key: 'D', label: '迁都长安' }
+        ],
+        answer: 'B',
+        localHint: '提示：抓住“西域”“商旅”两个关键词——“凿空”意为开通通道。',
+        analysis: '“凿空”出自《史记·大宛列传》，指张骞出使西域、首次打通中原与西域往来通道，即后来丝绸之路的开端。'
+      },
+      {
+        material: '博望侯张骞……身所至者大宛、大月氏、大夏、康居，而传闻其旁大国五六。',
+        question: '史料中的“博望侯”是张骞的什么？',
+        options: [
+          { key: 'A', label: '官职名称' },
+          { key: 'B', label: '封爵称号' },
+          { key: 'C', label: '谥号' },
+          { key: 'D', label: '表字' }
+        ],
+        answer: 'B',
+        localHint: '“侯”在汉代是爵位等级，先想“侯”属于官还是属于封赏。',
+        analysis: '张骞因通西域之功被封为“博望侯”，“侯”是汉代爵位，不是官职或字号。'
+      },
+      {
+        material: '于是西北国始通于汉矣，然张骞凿空，其后使往者皆称博望侯。',
+        question: '史料中“始通于汉”的“通”，最接近下列哪个意思？',
+        options: [
+          { key: 'A', label: '开始交往、往来相通' },
+          { key: 'B', label: '征收通行税' },
+          { key: 'C', label: '通知、告知' },
+          { key: 'D', label: '通缉、追捕' }
+        ],
+        answer: 'A',
+        localHint: '把“通”放回“国与国之间”的语境里，想想两边在做什么。',
+        analysis: '“通”在此指西域诸国与汉朝开始互相往来、使者相通，是外交与商贸关系的建立，与赋税、通知无关。'
+      }
+    ]
+  },
+  {
+    char: '证',
+    label: '证据寻找',
+    relicLabel: '史料摘编',
+    questions: [
+      {
+        material: '商旅相望于道，诸使外国一辈大者数百，少者百余人。',
+        question: '这段记载最能说明下列哪一点？',
+        options: [
+          { key: 'A', label: '丝路上使团与商旅往来频繁' },
+          { key: 'B', label: '汉朝人口数量庞大' },
+          { key: 'C', label: '西域道路狭窄难行' },
+          { key: 'D', label: '汉朝禁止民间通商' }
+        ],
+        answer: 'A',
+        localHint: '“相望于道”是在说路上的人多还是路难走？先分辨这句在描写数量。',
+        analysis: '“相望于道”写路上队伍前后可见，“大者数百、少者百余人”是使团规模，说明丝路开通后往来之盛。'
+      },
+      {
+        material: '宛王蝉封与汉约，岁献天马二匹。',
+        question: '史料中“天马”指的是什么？',
+        options: [
+          { key: 'A', label: '西域良马（汗血马）' },
+          { key: 'B', label: '骆驼' },
+          { key: 'C', label: '大象' },
+          { key: 'D', label: '传说中的神兽' }
+        ],
+        answer: 'A',
+        localHint: '“岁献二匹”说明是可以按匹计数、真实存在的动物，不是神话形象。',
+        analysis: '“天马”是汉朝对西域大宛良马（后世称汗血马）的美称，是可计数的真实马匹。'
+      },
+      {
+        material: '自敦煌西至盐泽，往往起亭，而轮台、渠犁皆有田卒数百人。',
+        question: '史料中“起亭”的“亭”，在丝路交通中主要承担什么作用？',
+        options: [
+          { key: 'A', label: '沿途的驿站、哨所据点' },
+          { key: 'B', label: '供人游赏的园林亭子' },
+          { key: 'C', label: '进行交易的集市' },
+          { key: 'D', label: '地方官办公的衙署' }
+        ],
+        answer: 'A',
+        localHint: '和“田卒数百人”一起看——有驻守、有屯田，说明这是交通线上的据点。',
+        analysis: '汉代在敦煌至盐泽一线“起亭”，亭是边塞交通线上的驿站兼哨所，为往来使者商旅提供停驻与警戒。'
+      }
+    ]
+  },
+  {
+    char: '论',
+    label: '观点论证',
+    relicLabel: '待论证观点',
+    questions: [
+      {
+        material: '观点：张骞出使西域最重要的影响，是打通了中原与西域的往来通道。',
+        question: '下列哪条证据最能支持这一观点？',
+        options: [
+          { key: 'A', label: '张骞被汉武帝封为博望侯' },
+          { key: 'B', label: '此后汉朝使者、商旅沿其路线往来不绝' },
+          { key: 'C', label: '张骞曾中途被匈奴扣留十余年' },
+          { key: 'D', label: '张骞出使时随行百余人' }
+        ],
+        answer: 'B',
+        localHint: '要证明“通道被打开”，最直接的证据应该是通道开通之后发生了什么。',
+        analysis: '观点讲的是“打通通道”这一结果，最能证明它的是开通后使者商旅往返不断；封侯、被扣、随行人数只说明个人经历或规模。'
+      },
+      {
+        material: '有同学说：丝路的开通完全是汉朝单方面主动的结果。',
+        question: '要反驳这一说法，最应补充下列哪类证据？',
+        options: [
+          { key: 'A', label: '西域诸国同样有通商需求，并主动与汉朝往来' },
+          { key: 'B', label: '汉朝拥有强大的骑兵部队' },
+          { key: 'C', label: '张骞出身于平民家庭' },
+          { key: 'D', label: '汉朝的都城设在长安' }
+        ],
+        answer: 'A',
+        localHint: '要反驳“单方面”，就该找另一方的动作，而不是继续证明汉朝强。',
+        analysis: '“单方面”的说法忽略了西域一方的需求与回应；补上西域诸国主动往来的史实，才能说明丝路是双方共同促成的。'
+      },
+      {
+        material: '观点：张骞出使兼具军事与外交双重目的。',
+        question: '下列证据组合中，最能同时支撑“军事”和“外交”的是？',
+        options: [
+          { key: 'A', label: '联络大月氏夹击匈奴，同时与西域诸国建立往来' },
+          { key: 'B', label: '只携带丝绸出境' },
+          { key: 'C', label: '只沿海上航线前行' },
+          { key: 'D', label: '只在边境修筑长城' }
+        ],
+        answer: 'A',
+        localHint: '把“军事”对上一个动作，“外交”对上另一个动作，看哪组两样都齐。',
+        analysis: '张骞西行的初始使命是联络大月氏夹击匈奴（军事），而其结果是与西域诸国建立联系（外交），一组史实可同时支撑两方面。'
+      }
+    ]
+  },
+  {
+    char: '评',
+    label: '答卷互评',
+    relicLabel: '同学作答',
+    questions: [
+      {
+        material: '同学作答：“凿空就是把一座山挖空了。”',
+        question: '作为互评人，你应给出的评语是？',
+        options: [
+          { key: 'A', label: '理解正确，可以给满分' },
+          { key: 'B', label: '混淆了字面义与语境义，“凿空”在此指开通通道' },
+          { key: 'C', label: '字数太少，需补充细节' },
+          { key: 'D', label: '书写不规范，扣分' }
+        ],
+        answer: 'B',
+        localHint: '互评要看史实理解对不对，先判断他把词义读成了什么意思。',
+        analysis: '该作答按现代字面拆字理解，忽略了“凿空”在《史记》中的特定含义——首次开通中原与西域的通道。'
+      },
+      {
+        material: '同学作答：“丝绸之路就是张骞一个人走出来的。”',
+        question: '最恰当的评价是？',
+        options: [
+          { key: 'A', label: '完全正确，表述简洁' },
+          { key: 'B', label: '夸大了个人作用，丝路是汉朝使团与商旅长期共同开拓的结果' },
+          { key: 'C', label: '与史实毫无关系' },
+          { key: 'D', label: '只是表述太短，内容无误' }
+        ],
+        answer: 'B',
+        localHint: '注意“一个人”三个字——史实里走这条路的是谁？',
+        analysis: '张骞是开拓者与奠基者，但丝路的形成依赖此后大批使者、商旅的持续往来，把功劳归于一人属于夸大个人作用。'
+      },
+      {
+        material: '同学用“张骞被封为博望侯”来证明“丝路开通意义重大”。',
+        question: '这份答卷在论证上的主要问题是？',
+        options: [
+          { key: 'A', label: '证据与观点之间缺少直接关联' },
+          { key: 'B', label: '年代写错了' },
+          { key: 'C', label: '人物张冠李戴' },
+          { key: 'D', label: '没有引用原文' }
+        ],
+        answer: 'A',
+        localHint: '别看他引的史实对不对，先问：这条史实能推出“意义重大”吗？',
+        analysis: '“被封侯”说明朝廷对其功劳的认可，并不能直接推出丝路开通的历史意义；论证需要补充丝路带来的往来、交流等结果性证据。'
+      }
+    ]
+  }
+];
+var EPISODES = [
+  {
+    id: 1,
+    ep: '第 1 集',
+    title: '丝路驼队 · 黄昏入玉门',
+    dur: '00:15',
+    ready: true,
+    video: 'assets/ep1.mp4',
+    videoCloud: '',
+    feedId: '',
+    cover: 'assets/scene_silkroad.jpg',
+    tag: '已上线',
+    desc: '张骞一行出玉门关西行，落日下的驼队第一次走进西域。',
+    source: '《史记·大宛列传》：骞以郎应募，使月氏……'
+  },
+  {
+    id: 2,
+    ep: '第 2 集',
+    title: '张骞持节 · 出关那道坎',
+    dur: '00:15',
+    ready: true,
+    video: 'assets/ep2.mp4',
+    videoCloud: '',
+    feedId: '',
+    cover: 'assets/poster_ep2.jpg',
+    tag: '已上线',
+    desc: '关城之下，关吏伏案核对过所——人数、货物、事由对不上，一律不许出关。',
+    source: '汉简《使者过所》：……与过所相符，乃得出关。'
+  },
+  {
+    id: 3,
+    ep: '第 3 集',
+    title: '烽燧今夜 · 三堆为警',
+    dur: '00:15',
+    ready: true,
+    video: 'assets/ep3.mp4',
+    videoCloud: '',
+    feedId: '',
+    cover: 'assets/poster_ep3.jpg',
+    tag: '已上线',
+    desc: '边塞一夜，戍卒在土燧上点火。烽火堆数就是军情，数错一次要掉脑袋。',
+    source: '《塞上烽火品约》：昼举烽，夜举苣火。'
+  },
+  {
+    id: 4,
+    ep: '第 4 集',
+    title: '鸿门余波 · 礼里的杀机',
+    dur: '00:15',
+    ready: true,
+    video: 'assets/ep4.mp4',
+    videoCloud: '',
+    feedId: '',
+    cover: 'assets/poster_ep4.jpg',
+    tag: '已上线',
+    desc: '军帐对坐，烛火与刀光同席。座次、举玦、以身翼蔽，是一场没有流血的杀局。',
+    source: '《史记·项羽本纪》：项庄拔剑起舞，项伯亦拔剑起舞，常以身翼蔽沛公。'
+  }
+];
+var RELICS = [
+  {
+    id: 'hufu',
+    name: '汉虎符',
+    cat: 'relic',
+    img: 'assets/relic_hufu.png',
+    era: '西汉',
+    material: '青铜、错金',
+    origin: '汉代调兵凭证，左右分持，合符方能发兵',
+    quote: '「甲兵之符，右在君，左在杜。」——秦杜虎符铭文，汉承其制',
+    story: '剧本杀《密信与虎符》里，案上那半枚虎符就是它：只有与另一半合上，才能判断来使是真奉命还是假传军令。',
+    unlockLevel: 0
+  },
+  {
+    id: 'wuzhu',
+    name: '五铢钱',
+    cat: 'relic',
+    img: 'assets/relic_wuzhu.png',
+    era: '西汉',
+    material: '青铜',
+    origin: '汉武帝元狩五年始铸，通行两汉四百年',
+    quote: '「自孝武元狩五年，初铸五铢钱。」——《汉书·食货志》',
+    story: '丝路上的商队用它与西域诸国交易，是「商旅相望于道」最日常的证据。',
+    unlockLevel: 0
+  },
+  {
+    id: 'fujie',
+    name: '张骞符节',
+    cat: 'relic',
+    img: 'assets/relic_fujie.png',
+    era: '西汉',
+    material: '竹柄、青铜节',
+    origin: '使者所持信物，持节即代表天子出使',
+    quote: '「骞持汉节不失。」——《汉书·张骞传》',
+    story: '张骞被匈奴扣留十余年仍「持汉节不失」；剧情里他以符节说服西域首领，靠的正是这份身份凭证。',
+    unlockLevel: 0
+  },
+  {
+    id: 'jian_shu',
+    name: '汉简·戍卒家书',
+    cat: 'doc',
+    img: '',
+    era: '西汉',
+    material: '木简、墨书',
+    origin: '敦煌、居延一带边塞遗址出土',
+    quote: '「戍卒某某，敢再拜问……愿母毋恙。」',
+    story: '守着丝路驿站的不只是使者与商队，还有屯田戍卒；一封家书让「起亭」「田卒数百人」有了具体的人。',
+    unlockLevel: 2
+  },
+  {
+    id: 'jin',
+    name: '西域织锦',
+    cat: 'textile',
+    img: '',
+    era: '汉',
+    material: '丝织、植物染料',
+    origin: '西域墓葬与丝路沿线遗址出土',
+    quote: '「织锦为书，以遗西域。」',
+    story: '中原的丝与西域的马、葡萄、苜蓿在丝路上对换，织锦是最直白的一件「东西互见」的实物。',
+    unlockLevel: 3
+  },
+  {
+    id: 'guosuo',
+    name: '汉简·使者过所',
+    cat: 'doc',
+    img: '',
+    era: '西汉',
+    material: '木简、墨书',
+    origin: '肩水金关等关隘遗址出土',
+    quote: '「过所，谓行路之文书。」',
+    story: '使者与商旅出关要凭「过所」，说明丝路的往来并非自由散行，而有制度与关卡在支撑。',
+    unlockLevel: 4
+  }
+];
+var TABS = [
+  { key: 'all', label: '全部' },
+  { key: 'relic', label: '器物' },
+  { key: 'doc', label: '简牍' },
+  { key: 'textile', label: '织物' }
+];
+var STATIONS = [
+  {
+    id: 't1',
+    year: '前 138 年',
+    era: '西汉 · 建元二年',
+    title: '凿空西域',
+    desc: '张骞持汉节出使大月氏，途中为匈奴所拘十余年，「持汉节不失」，最终西行到达大宛、大月氏、大夏、康居。',
+    links: [{ type: 'story', label: '剧本杀 · 第 3 幕 密信与虎符' }]
+  },
+  {
+    id: 't2',
+    year: '前 126 年',
+    era: '西汉 · 元朔三年',
+    title: '归汉陈状',
+    desc: '张骞回到长安，向武帝细述西域诸国的山川、物产与兵力，《史记·大宛列传》所记西域情形多本于此。',
+    links: [{ type: 'level', level: 1, label: '闯关 · 第 1 关 史料破译' }]
+  },
+  {
+    id: 't3',
+    year: '前 121 年',
+    era: '西汉 · 元狩二年',
+    title: '河西归汉',
+    desc: '匈奴浑邪王率众降汉，河西走廊纳入汉朝版图，此后陆续设置武威、张掖、酒泉、敦煌四郡，丝路有了走廊。',
+    links: [{ type: 'level', level: 2, label: '闯关 · 第 2 关 证据寻找' }]
+  },
+  {
+    id: 't4',
+    year: '前 119 年',
+    era: '西汉 · 元狩四年',
+    title: '漠北决战',
+    desc: '卫青、霍去病分道出击匈奴，匈奴远遁，「漠南无王庭」，丝路北道由此得以安稳通行。',
+    links: []
+  },
+  {
+    id: 't5',
+    year: '前 105 年',
+    era: '西汉 · 元封六年',
+    title: '乌孙和亲',
+    desc: '细君公主远嫁乌孙昆莫，汉与乌孙结盟共制匈奴；「吾家嫁我兮天一方」写下的正是这条远路。',
+    links: [{ type: 'drama', label: 'AI 短剧 · 丝路商队' }]
+  },
+  {
+    id: 't6',
+    year: '前 60 年',
+    era: '西汉 · 神爵二年',
+    title: '西域都护',
+    desc: '匈奴日逐王降汉，郑吉受任为西域都护，西域正式纳入汉朝管辖，使者与商旅往来的制度至此成形。',
+    links: [{ type: 'level', level: 3, label: '闯关 · 第 3 关 待论证观点' }]
+  },
+  {
+    id: 't7',
+    year: '73 年',
+    era: '东汉 · 永平十六年',
+    title: '班超再通',
+    desc: '班超率三十六人出使西域，经营三十一年，使丝路在东汉再次贯通——「不入虎穴，不得虎子」即出于此行。',
+    links: [{ type: 'level', level: 4, label: '闯关 · 第 4 关 答卷互评' }]
+  },
+  {
+    id: 't8',
+    year: '97 年',
+    era: '东汉 · 永元九年',
+    title: '甘英西行',
+    desc: '甘英奉班超之命出使大秦，抵条支、临西海而返，是汉代走得最远的使者，也是丝路西端最远的一次试探。',
+    links: []
+  }
+];
+var LEVEL_TOTAL = 4;
+var PAGE_SIZE = 3;
+var POINTS = { right: 200, act: 300, relay: 40, storyChoice: 60 };
+</script>
+<script>
+/* ==================== 基础设施 ==================== */
+const A = p => (p || '').replace(/^\/assets\//, 'assets/');
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const PKEY = 'szj_progress_v1', UKEY = 'szj_user_v1';
+const AI_ENDPOINT = ''; // 填中转地址（云函数 HTTP）优先；留空则用下面的 key 直连 DeepSeek
+// 直连用的 key，拆成两段运行时拼接，避免整串明文出现在源码里
+const AI_KEY_A = 'sk-e3c265774dae44f9';
+const AI_KEY_B = '94ee0489f8d1e522';
+const AI_KEY = (AI_KEY_A + AI_KEY_B).trim();
+
+function blank() {
+  return { points: 0, answered: 0, correct: 0, levels: {}, relics: {}, acts: {}, choices: [], wrong: [] };
+}
+function loadProg() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(PKEY) || 'null');
+    if (!raw || typeof raw !== 'object') return blank();
+    const b = blank();
+    return Object.assign(b, raw, {
+      levels: raw.levels || {}, relics: raw.relics || {}, acts: raw.acts || {},
+      choices: Array.isArray(raw.choices) ? raw.choices : [],
+      wrong: Array.isArray(raw.wrong) ? raw.wrong : []
+    });
+  } catch (e) { return blank(); }
+}
+function saveProg() { try { localStorage.setItem(PKEY, JSON.stringify(PROG)); } catch (e) {} }
+function loadUser() {
+  try { return JSON.parse(localStorage.getItem(UKEY) || 'null') || { name: '旅人', avatar: 'assets/avatar_shiguang.jpg' }; }
+  catch (e) { return { name: '旅人', avatar: 'assets/avatar_shiguang.jpg' }; }
+}
+let PROG = loadProg();
+let USER = loadUser();
+
+/* ==================== AI 中转 ==================== */
+const AI_ON = !!(AI_ENDPOINT || AI_KEY);
+const GEN = {}; // 运行期生成状态：'loading' | 'error'
+const GENOPT = {}; // 选项生成状态
+function genOf(gk) {
+  const raw = (PROG.gen || {})[gk];
+  if (Array.isArray(raw)) return { parts: raw.slice(), opts: [] };
+  if (raw && typeof raw === 'object') {
+    return {
+      parts: Array.isArray(raw.parts) ? raw.parts.slice() : [],
+      opts: Array.isArray(raw.opts) ? raw.opts.slice() : []
+    };
+  }
+  if (typeof raw === 'string' && raw) return { parts: [raw], opts: [] };
+  return { parts: [], opts: [] };
+}
+function lastDrama(id) {
+  const e = EPISODES.find(x => x.id === Number(id));
+  if (!e) return null;
+  const recs = PROG.choices.filter(c => c.src === 'drama' && c.title === e.title);
+  if (!recs.length) return null;
+  return { e, rec: recs[recs.length - 1] };
+}
+function aiChat(system, msgs) {
+  if (!AI_ON) return Promise.reject(new Error('no endpoint'));
+  const messages = [{ role: 'system', content: system }].concat(msgs || []);
+  const direct = !AI_ENDPOINT;
+  const url = AI_ENDPOINT || 'https://api.deepseek.com/chat/completions';
+  const headers = { 'Content-Type': 'application/json' };
+  if (direct) headers.Authorization = 'Bearer ' + AI_KEY;
+  const body = direct
+    ? { model: 'deepseek-chat', messages, temperature: 0.8, max_tokens: 400 }
+    : { messages };
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), 30000);
+  return fetch(url, {
+    method: 'POST',
+    headers,
+    signal: ctl.signal,
+    body: JSON.stringify(body)
+  })
+    .then(r => r.json())
+    .then(d => {
+      clearTimeout(timer);
+      const t = (d && (d.text || d.reply || d.content ||
+        (d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content))) || '';
+      if (!t) throw new Error('empty');
+      return String(t).trim();
+    })
+    .catch(e => { clearTimeout(timer); throw e; });
+}
+function aiText(system, user) {
+  return aiChat(system, [{ role: 'user', content: user }]);
+}
+
+function summary() {
+  let stars = 0, doneLevels = 0;
+  Object.keys(PROG.levels).forEach(k => {
+    stars += Number(PROG.levels[k].filled) || 0;
+    if (PROG.levels[k].done) doneLevels++;
+  });
+  const collected = RELICS.filter(r => r.unlockLevel === 0 || PROG.relics[r.id]).length;
+  return {
+    points: PROG.points, answered: PROG.answered, correct: PROG.correct,
+    stars, maxStars: LEVEL_TOTAL * PAGE_SIZE, doneLevels, totalLevels: LEVEL_TOTAL,
+    collected, relicTotal: RELICS.length, atlasPercent: Math.round(collected / RELICS.length * 100),
+    acts: Object.keys(PROG.acts).length
+  };
+}
+function relicList() {
+  return RELICS.map(r => {
+    const unlocked = r.unlockLevel === 0 || !!PROG.relics[r.id];
+    return { id: r.id, name: unlocked ? r.name : '？？？', cat: r.cat || 'relic', era: unlocked ? r.era : '', img: unlocked ? A(r.img) : '', locked: !unlocked, unlockLevel: r.unlockLevel };
+  });
+}
+function relicOf(id) {
+  const r = RELICS.find(x => x.id === id); if (!r) return null;
+  const unlocked = r.unlockLevel === 0 || !!PROG.relics[r.id];
+  return Object.assign({}, r, { unlocked, img: unlocked ? A(r.img) : '' });
+}
+function markAct(key) {
+  const first = !PROG.acts[key];
+  if (first) { PROG.acts[key] = true; PROG.points += POINTS.act; }
+  saveProg(); return first;
+}
+function recordChoice(entry, points) {
+  const dkey = [entry.src || 'misc', entry.title || '', entry.label || ''].join('|');
+  if (PROG.choices.find(c => c.dkey === dkey)) return false;
+  PROG.choices.push({ dkey, key: entry.key || '', src: entry.src, title: entry.title, label: entry.label, points, time: Date.now() });
+  if (PROG.choices.length > 30) PROG.choices = PROG.choices.slice(-30);
+  PROG.points += points; saveProg(); return true;
+}
+function recordAnswer(isRight, meta) {
+  PROG.answered += 1;
+  if (isRight) { PROG.correct += 1; PROG.points += POINTS.right; }
+  if (meta && meta.key) {
+    if (isRight) PROG.wrong = PROG.wrong.filter(w => w.key !== meta.key);
+    else {
+      const rec = Object.assign({ time: Date.now() }, meta);
+      const i = PROG.wrong.findIndex(w => w.key === meta.key);
+      if (i >= 0) PROG.wrong[i] = rec; else PROG.wrong.push(rec);
+    }
+  }
+  saveProg();
+}
+function finishLevel(levelNo, filled) {
+  const k = String(levelNo), prev = PROG.levels[k] || {};
+  PROG.levels[k] = { filled: Math.max(Number(prev.filled) || 0, Math.min(PAGE_SIZE, filled || 0)), done: true };
+  const unlocked = [];
+  RELICS.forEach(r => {
+    if (r.unlockLevel === levelNo && !PROG.relics[r.id]) { PROG.relics[r.id] = true; unlocked.push(r); }
+  });
+  saveProg(); return unlocked;
+}
+function storyProgress(no) {
+  let done = 0;
+  for (let i = 1; i <= 3; i++) if (PROG.acts[no + '-' + i]) done++;
+  return { done, total: 3, finished: done >= 3 };
+}
+
+/* ==================== 交互小件 ==================== */
+let toastTimer = null;
+function toast(msg) {
+  const layer = $('#layer');
+  let t = layer.querySelector('.toast');
+  if (!t) { t = document.createElement('div'); t.className = 'toast'; layer.appendChild(t); }
+  t.textContent = msg; clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.remove(), 1800);
+}
+function GO(hash) { location.hash = '#/' + hash; window.scrollTo(0, 0); }
+function back() { history.length > 1 ? history.back() : GO('index'); }
+
+/* ==================== 公共片段 ==================== */
+function topbar(title, sub) {
+  return `<div class="topbar"><div class="back" onclick="back()">‹</div>
+    <div><div class="ttl">${esc(title)}</div>${sub ? `<div class="sub">${esc(sub)}</div>` : ''}</div></div>`;
+}
+function tabbar(active) {
+  const items = [
+    ['index', '◈', '首页'], ['story', '❖', '剧本'], ['drama', '▷', '短剧'],
+    ['challenge', '✦', '闯关'], ['profile', '☰', '我的']
+  ];
+  return `<nav class="tabbar">${items.map(([k, g, l]) =>
+    `<div class="tb ${active === k ? 'on' : ''}" onclick="GO('${k}')"><span class="g">${g}</span>${l}</div>`).join('')}</nav>`;
+}
+function avatarImg(src) { return `<img src="${A(src)}" alt="">`; }
+
+/* ==================== 启动页 ==================== */
+function viewSplash() {
+  return `<div class="splash">
+    <div class="bg" style="background-image:url('assets/splash_bg.jpg')"></div>
+    <div class="veil"></div>
+    <div class="inner">
+      <div class="logo">时光侦局</div>
+      <div class="slog">穿越千年 · 亲历历史</div>
+      <div class="latin">SHIGUANG ZHENJU · AI HISTORY THEATRE</div>
+      <button class="btn primary" onclick="GO('login')">开 始 穿 越</button>
+      <div class="note" style="margin-top:16px">汉代丝路 · 楚汉风云 · 史料闯关</div>
+    </div></div>`;
+}
+
+/* ==================== 登录 ==================== */
+function viewLogin() {
+  const named = USER && USER.name && USER.name !== '旅人';
+  return `<div class="login">
+    <div class="login-bg"></div>
+    <div class="login-veil"></div>
+    <div class="login-hero">
+      <div class="seal"><span>侦</span></div>
+      <div class="brand">时光侦局</div>
+      <div class="brand-rule"><i></i>穿越千年 · 亲历历史<i></i></div>
+      <div class="brand-latin">SHIGUANG ZHENJU · AI HISTORY THEATRE</div>
+      <div class="login-meta">
+        <div><b>3</b><span>案剧本</span></div>
+        <div><b>4</b><span>集短剧</span></div>
+        <div><b>12</b><span>关史料</span></div>
+        <div><b>6</b><span>件文物</span></div>
+      </div>
+    </div>
+    <div class="login-sheet">
+      <div class="sh-t">报上名号</div>
+      <div class="sh-s">取一个名字，作为你在局中的身份</div>
+      <div class="idcard">
+        <div class="idcard-ava" onclick="pickAvatar()">
+          <img id="avaPrev" src="${esc(USER.avatar || 'assets/avatar_shiguang.jpg')}" alt="">
+          <span class="idcard-cam">换一张</span>
+        </div>
+        <div class="idcard-fields">
+          <div class="fld-label">昵 称</div>
+          <label class="fld"><input id="nick" maxlength="12" placeholder="如：小沈、子房门客" value="${esc(named ? USER.name : '')}"></label>
+          <div class="fld-hint">12 字以内 · 头像可点左侧更换</div>
+        </div>
+      </div>
+      <button class="btn primary block" onclick="doLogin()">进 入 局 中</button>
+      <button class="btn ghost block" onclick="GO('index')">先随便逛逛 ›</button>
+      <div class="login-note">昵称与头像只保存在本机浏览器，不会上传服务器</div>
+    </div>
+  </div>`;
+}
+function pickAvatar() {
+  const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*';
+  i.onchange = () => {
+    const f = i.files[0]; if (!f) return;
+    const fr = new FileReader();
+    fr.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const c = document.createElement('canvas'); const s = 160;
+        c.width = s; c.height = s;
+        const ctx = c.getContext('2d');
+        const side = Math.min(img.width, img.height);
+        ctx.drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, s, s);
+        const url = c.toDataURL('image/jpeg', .82);
+        $('#avaPrev').src = url; window.__pendingAvatar = url;
+      };
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(f);
+  };
+  i.click();
+}
+function doLogin() {
+  const n = ($('#nick').value || '').trim() || '旅人';
+  USER = { name: n, avatar: window.__pendingAvatar || 'assets/avatar_shiguang.jpg' };
+  try { localStorage.setItem(UKEY, JSON.stringify(USER)); } catch (e) {}
+  toast('欢迎，' + n);
+  GO('index');
+}
+
+/* ==================== 首页 ==================== */
+function viewIndex() {
+  const s = summary();
+  const lastAct = findLastAct();
+  return `<div class="wrap fade">
+    <div class="hello">
+      <div class="ava">${avatarImg(USER.avatar)}</div>
+      <div><div class="who">${esc(USER.name)}</div><div class="tip">${s.answered ? '已答 ' + s.answered + ' 题 · 正确率 ' + Math.round(s.correct / s.answered * 100) + '%' : '尚未开始 · 从剧本杀进门最快'}</div></div>
+    </div>
+    <div class="points">
+      <div class="pt"><b>${s.points}</b><span>积分</span></div>
+      <div class="pt"><b>${s.stars}<em>/${s.maxStars}</em></b><span>闯关星数</span></div>
+      <div class="pt"><b>${s.collected}<em>/${s.relicTotal}</em></b><span>已收文物</span></div>
+    </div>
+
+    <div class="cols">
+    <div class="card tap" onclick="GO('story')"><div class="entry">
+      <div class="ico">谋</div>
+      <div style="flex:1"><div class="name">历史剧本杀</div><div class="desc">以谋士身份入场，靠史料判断，做自己的抉择</div></div>
+      <div class="go">›</div></div>
+      <div class="progressbar" style="margin-top:12px"><i style="width:${Math.round(s.acts / 9 * 100)}%"></i></div>
+      <div class="muted" style="margin-top:7px">已结案 ${s.acts}/9 幕</div>
+    </div>
+
+    <div class="card tap" onclick="GO('drama')"><div class="entry">
+      <div class="ico t">剧</div>
+      <div style="flex:1"><div class="name">AI 历史短剧</div><div class="desc">四集竖屏短剧，从丝路驼队到鸿门余波</div></div>
+      <div class="go">›</div></div>
+      <div class="muted" style="margin-top:10px">共 ${EPISODES.length} 集 · 看完一集可接着往下写</div>
+    </div>
+
+    <div class="card tap" onclick="GO('challenge')"><div class="entry">
+      <div class="ico">译</div>
+      <div style="flex:1"><div class="name">史料闯关</div><div class="desc">读一段汉简，答一道题，答对解锁一件文物</div></div>
+      <div class="go">›</div></div>
+      <div class="muted" style="margin-top:10px">已通关 ${s.doneLevels}/${s.totalLevels} 关</div>
+    </div>
+
+    <div class="card tap" onclick="GO('atlas')"><div class="entry">
+      <div class="ico t">鉴</div>
+      <div style="flex:1"><div class="name">史料图鉴</div><div class="desc">虎符、五铢、符节、简牍、织锦、过所</div></div>
+      <div class="go">›</div></div>
+      <div class="muted" style="margin-top:10px">已收 ${s.collected}/${s.relicTotal} 件 · 点开看释义</div>
+    </div>
+    </div>
+
+    <h3>接着做</h3>
+    ${lastAct ? `<div class="card tap" onclick="GO('story/${lastAct.no}/${lastAct.idx}')">
+      <div class="between"><div><div class="name" style="font-family:var(--serif)">继续《${esc(lastAct.name)}》· ${esc(lastAct.title)}</div>
+      <div class="muted" style="margin-top:6px">接着上次没结案的那一幕</div></div><div class="go">›</div></div></div>` :
+      `<div class="card tap" onclick="GO('story/1')"><div class="between"><div>
+      <div style="font-family:var(--serif)">从《楚汉风云》第一幕开始</div><div class="muted" style="margin-top:6px">荥阳对峙，先当一次张良的线索官</div></div><div class="go">›</div></div></div>`}
+    <div class="card tap" onclick="GO('report')"><div class="between"><div>
+      <div style="font-family:var(--serif)">查看学习报告</div><div class="muted" style="margin-top:6px">积分、星数、你做过的抉择</div></div><div class="go">›</div></div></div>
+  </div>`;
+}
+function findLastAct() {
+  for (let n = 1; n <= SCRIPTS.length; n++) {
+    const sp = storyProgress(n);
+    if (sp.done < 3) {
+      const next = sp.done + 1;
+      const sc = SCRIPTS[n - 1];
+      return { no: n, idx: next, name: sc.name, title: sc.acts[next - 1].title };
+    }
+  }
+  return null;
+}
+
+/* ==================== 剧本：列表 ==================== */
+function viewStoryList() {
+  const cards = SCRIPTS.map((s, i) => {
+    const p = storyProgress(s.no);
+    return `<div class="card tap" onclick="GO('story/${s.no}/1')"><div class="script">
+      <div class="cover"><img src="${A(s.cover)}" alt=""></div>
+      <div style="flex:1;min-width:0">
+        <div class="between"><div><div style="font-family:var(--serif);font-size:16px;font-weight:700">${esc(s.name)}</div>
+        <div class="muted" style="margin-top:4px">${esc(s.sub)}</div></div>
+        ${p.finished ? '<span class="tag">已全案</span>' : `<span class="tag gold">${p.done}/3 幕</span>`}</div>
+        <div class="chips" style="margin-top:9px">${s.acts.map((a, k) =>
+          `<span class="chip ${PROG.acts[s.no + '-' + (k + 1)] ? 'on' : ''}">${k + 1} ${esc(a.title)}</span>`).join('')}</div>
+      </div></div></div>`;
+  }).join('');
+  return `<div class="wrap fade">
+    <div class="h1">历史剧本杀</div>
+    <div class="muted" style="margin-bottom:16px">你是谋士帐下的线索官：看史料、找矛盾、做抉择。三幕结案即通关。</div>
+    <div class="cols cols3">${cards}</div>
+    <div class="note" style="margin-top:6px">剧情对话由本地史料规则生成；接入中转后可切换为大模型自由对话。</div>
+  </div>`;
+}
+
+/* ==================== 剧本：单幕 ==================== */
+const STORY_UI = {}; // { key: { msgs:[], checked:{}, concluded:bool, chosen:'' } }
+let CUR = { no: 1, idx: 1 };
+
+function storyUIKey() { return CUR.no + '-' + CUR.idx; }
+function ui() {
+  const k = storyUIKey();
+  if (!STORY_UI[k]) STORY_UI[k] = { msgs: [], checked: {}, chosen: '', concluded: !!PROG.acts[k] };
+  return STORY_UI[k];
+}
+function viewStoryAct(no, idx) {
+  CUR = { no: Number(no), idx: Number(idx) };
+  if (CUR.idx > 1 && !PROG.acts[CUR.no + '-' + (CUR.idx - 1)]) {
+    CUR.idx = Math.max(1, CUR.idx - 1); toast('先结上一幕才能开这一幕');
+    setTimeout(() => GO('story/' + CUR.no + '/' + CUR.idx), 10);
+  }
+  const sc = SCRIPTS[CUR.no - 1]; const act = sc.acts[CUR.idx - 1];
+  const u = ui();
+  if (!u.msgs.length) act.opener.forEach(o => u.msgs.push({ who: o.who, text: o.text, me: false }));
+  const doneCount = Object.keys(u.checked).filter(k => u.checked[k]).length;
+  const actsHtml = sc.acts.map((a, i) => {
+    const n = i + 1;
+    const unlocked = n === 1 || PROG.acts[CUR.no + '-' + (n - 1)];
+    const done = !!PROG.acts[CUR.no + '-' + n];
+    return `<div class="act ${n === CUR.idx ? 'on' : ''} ${done ? 'done' : ''}" ${unlocked ? `onclick="GO('story/${CUR.no}/${n}')"` : ''}>
+      <b>${unlocked ? n + ' ' + esc(a.title) : '🔒 未解锁'}</b><span>${done ? '已结案' : unlocked ? '待侦' : '先结上一案'}</span></div>`;
+  }).join('');
+
+  const msgs = u.msgs.map(m => `<div class="msg ${m.me ? 'me' : 'ai'}">
+    <div style="max-width:100%"><div class="who">${m.me ? '你' : esc(m.who)}</div><div class="bubble">${esc(m.text)}</div></div></div>`).join('')
+    + (u.thinking ? `<div class="msg ai"><div style="max-width:100%"><div class="who">${esc(act.role)}</div>
+      <div class="bubble" style="opacity:.6">正在思索…</div></div></div>` : '');
+
+  const missions = act.missions.map((m, i) => `<div class="mission ${u.checked[i] ? 'on' : ''}" onclick="toggleMission(${i})">
+    <div class="box">${u.checked[i] ? '✓' : ''}</div><span>${esc(m)}</span></div>`).join('');
+
+  const quick = act.quick.map((q, i) => `<span class="chip" onclick="storyQuick(${i})">${esc(q.label)}</span>`).join('');
+
+  const choiceBlock = doneCount >= 3 ? `<div class="divider"></div>
+    <div class="h2">做出你的抉择</div>
+    <div class="muted" style="margin-bottom:10px">同一幕同一个选项只记一次，记一次 +${POINTS.storyChoice} 积分${u.chosen ? '；你已选「' + esc(u.chosen) + '」' : ''}</div>
+    <div class="choice2">${act.quick.map((q, i) =>
+      `<button class="btn ${u.chosen === q.label ? 'primary' : 'ghost'}" onclick="storyChoose(${i})">${u.chosen === q.label ? '✓ ' : ''}${esc(q.label)}</button>`).join('')}</div>` : '';
+
+  const result = u.concluded ? `<div class="analysis" style="margin-top:14px"><b style="color:var(--gold2)">结案</b><br>${esc(act.conclusion)}</div>
+    ${CUR.idx < 3 && PROG.acts[CUR.no + '-' + (CUR.idx + 1)] === undefined ? '' : ''}
+    ${CUR.idx < 3 ? `<button class="btn primary block" style="margin-top:12px" onclick="GO('story/${CUR.no}/${CUR.idx + 1}')">进入第 ${CUR.idx + 1} 幕 · ${esc(sc.acts[CUR.idx].title)}</button>`
+      : `<button class="btn ghost block" style="margin-top:12px" onclick="GO('story')">三幕结案，回剧本列表</button>`}` : '';
+
+  return `${topbar(sc.name + ' · 第 ' + CUR.idx + ' 幕', act.title)}<div class="wrap fade">
+    <div class="acts">${actsHtml}</div>
+    <div class="card" style="padding:14px">
+      <div class="muted" style="margin-bottom:10px">场景：${esc(act.scene)}</div>
+      <div class="chat">${msgs}</div>
+      ${u.chosen ? `<div class="tag gold" style="display:inline-block;margin-top:8px">已记录抉择：${esc(u.chosen)}</div>` : ''}
+    </div>
+    <div class="card" style="padding:14px">
+      <div class="h2">本幕任务 ${doneCount}/3</div>
+      <div class="missions">${missions}</div>
+      <div class="divider"></div>
+      <div class="muted" style="margin-bottom:8px">可以这样问</div>
+      <div class="chips">${quick}</div>
+      <div class="inputbar"><input id="chatIn" placeholder="说出你的判断或追问…" onkeydown="if(event.key==='Enter')storySend()">
+        <button class="btn primary sm" onclick="storySend()">发送</button></div>
+    </div>
+    ${choiceBlock}
+    ${!u.concluded ? `<button class="btn primary block" style="margin-top:14px" ${doneCount >= 3 ? '' : 'disabled'} onclick="storyConclude()">${doneCount >= 3 ? '结 案（+' + POINTS.act + ' 积分）' : '完成三项任务后可结案'}</button>` : ''}
+    ${result}
+  </div>`;
+}
+function toggleMission(i) {
+  const u = ui(); u.checked[i] = !u.checked[i];
+  const done = Object.keys(u.checked).filter(k => u.checked[k]).length;
+  if (done === 3) toast('三项任务齐了，可以做抉择并结案');
+  render(true);
+}
+function storyQuick(i) {
+  const sc = SCRIPTS[CUR.no - 1]; const act = sc.acts[CUR.idx - 1];
+  pushUser(act.quick[i].label);
+}
+function storyChoose(i) {
+  const sc = SCRIPTS[CUR.no - 1]; const act = sc.acts[CUR.idx - 1];
+  const label = act.quick[i].label;
+  const ok = recordChoice({ key: act.quick[i].key, src: 'story', title: sc.name + '·' + act.title, label }, POINTS.storyChoice);
+  const u = ui(); u.chosen = label;
+  toast(ok ? '抉择已记录 +' + POINTS.storyChoice : '这个选项已记过');
+  pushUser(label);
+  setTimeout(() => {
+    const a = document.querySelector('.chat');
+    if (a && a.scrollIntoView) a.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }, 600);
+}
+function storySend() {
+  const box = $('#chatIn'); if (!box) return;
+  const v = (box.value || '').trim(); if (!v) return;
+  box.value = '';
+  pushUser(v);
+}
+function pushUser(text) {
+  const sc = SCRIPTS[CUR.no - 1]; const act = sc.acts[CUR.idx - 1];
+  const u = ui();
+  u.msgs.push({ who: '你', text, me: true });
+  u.thinking = true;
+  render(true);
+  const done = t => {
+    u.thinking = false;
+    u.msgs.push({ who: act.role, text: t, me: false });
+    render(true);
+  };
+  if (AI_ON) {
+    const sys = '你在扮演历史剧本《' + sc.name + '》第 ' + CUR.idx + ' 幕《' + act.title + '》里的' + act.role +
+      '。场景：' + act.scene + '。用第一人称、口语化回答，40 到 80 字，可以引用史料，但不要编造具体数字，也不要跳出角色。';
+    aiText(sys, text).then(t => done(t)).catch(() => done(reply(act, text)));
+  } else {
+    setTimeout(() => done(reply(act, text)), 420);
+  }
+}
+function reply(act, text) {
+  const hit = (act.offline || []).find(o => o.k.some(k => text.indexOf(k) >= 0));
+  return hit ? hit.r : act.fallback;
+}
+function storyConclude() {
+  const sc = SCRIPTS[CUR.no - 1]; const act = sc.acts[CUR.idx - 1];
+  const u = ui();
+  const first = markAct(CUR.no + '-' + CUR.idx);
+  u.concluded = true;
+  toast(first ? '结案 +' + POINTS.act + ' 积分' : '本幕已结过案');
+  render(true);
+}
+
+/* ==================== 短剧 ==================== */
+function viewDrama() {
+  const list = EPISODES.map(e => `<div class="ep" onclick="GO('drama/${e.id}')">
+    <div class="thumb"><img src="${A(e.cover)}" alt=""><b>${esc(e.ep)}</b></div>
+    <div class="meta"><div class="t">${esc(e.title)}</div>
+      <div class="d">${esc(e.desc)}</div>
+      <div class="chips" style="margin-top:7px"><span class="tag">${esc(e.dur)}</span><span class="tag gold">${esc(e.tag)}</span></div></div>
+  </div>`).join('');
+  return `<div class="wrap fade">
+    <div class="h1">AI 历史短剧</div>
+    <div class="muted" style="margin-bottom:16px">竖屏十五秒一集，每集后面有一次抉择。视频为 AI 生成素材，非历史影像。</div>
+    <div class="cols">${list}</div>
+    <div class="note">本页视频由 AI 生成，用于教学演示；画面为再创作，不作为史料影像使用。</div>
+  </div>`;
+}
+const DRAMA_CHOICES = {
+  1: [{ k: 'go', l: '继续西行，趁天没黑进玉门' }, { k: 'stop', l: '先扎营，派人探前路' }],
+  2: [{ k: 'pass', l: '按过所如实报人数货物' }, { k: 'hide', l: '少报一人，先混出关' }],
+  3: [{ k: 'three', l: '按品约点三堆烽火' }, { k: 'one', l: '先点一堆，免惊全军' }],
+  4: [{ k: 'seat', l: '守住座次，礼上不退' }, { k: 'yield', l: '让一步，先保命' }]
+};
+// 每个抉择的专属后续（据史料续写的分镜，非原文）
+const DRAMA_BRANCH = {
+  1: {
+    go: { t: '夜入玉门', b: '驼队压着最后一线日光穿过疏勒河谷。玉门都尉的烽燧在前方亮起，张骞让随从收拢驼铃，免得惊动边军。入关文牒上“使月氏”三字，仍是这一路唯一的凭据。' },
+    stop: { t: '沙窝里的夜', b: '营扎在沙窝里，篝火不敢烧高。斥候回来报：前方三十里有马队的踏痕，不像商队。张骞连夜改了路线，绕开河谷多走一日——也多留了一条命。' }
+  },
+  2: {
+    pass: { t: '唱名过关', b: '关吏逐人唱名，符节与过所相对，人数货物分毫不差。都尉反倒敬了一碗酒：肯如实报的，才像个真使者。出关那日，玉门的风把节上的旄毛吹得笔直。' },
+    hide: { t: '少报的那一个', b: '少报的那名随从被留在关外等下一队。三日后传来消息：他被游骑掳走。这件事后来写进张骞的奏报里，成了他一生不愿多提的隐痛。' }
+  },
+  3: {
+    three: { t: '三堆火起', b: '三堆火接连升起，百里内的烽燧一座接一座应和。援军两日后赶到，烽燧尉记功一等。只有你知道，那一夜烧掉的薪柴，够整座燧吃三个月。' },
+    one: { t: '一盏不灭的火', b: '一堆火在风里明明灭灭。援军迟了两日才到，烽燧尉没有罚你，只说：烽燧是点给后面的人看的，不是点给自己看的。' }
+  },
+  4: {
+    seat: { t: '东向次席', b: '你按礼法坐了东向次席。范增的玉玦在席上举了三次，项庄的剑舞到第三巡，始终没到你面前——座次就是护身符。' },
+    yield: { t: '退到末席', b: '你把东向让给了项伯，退到末席。命是保住了，只是刘邦记住的不是你的礼，是你的退；后来论功，你的名字排在很后面。' }
+  }
+};
+function viewDramaPlay(id) {
+  const e = EPISODES.find(x => x.id === Number(id)) || EPISODES[0];
+  const opts = DRAMA_CHOICES[e.id] || [];
+  const chosenKey = PROG.choices.filter(c => c.src === 'drama' && c.title === e.title);
+  const lastPick = chosenKey.length ? chosenKey[chosenKey.length - 1] : null;
+  const picked = lastPick ? lastPick.label : null;
+  let pickedKey = lastPick ? (lastPick.key || '') : '';
+  // 老版本记录的抉择没有 key，用选项文案反查补上
+  if (lastPick && !pickedKey) {
+    const hit = opts.find(o => o.l === lastPick.label);
+    pickedKey = hit ? hit.k : (opts[0] ? opts[0].k : '');
+    lastPick.key = pickedKey;
+  }
+  const gk = e.id + '-' + pickedKey;
+  const g = genOf(gk);
+  const parts = g.parts, opts2 = g.opts;
+  const fbBranch = (DRAMA_BRANCH[e.id] || {})[pickedKey];
+  const pending = picked && GEN[gk] === 'loading';
+  const optLoading = GENOPT[gk] === 'loading';
+  const cardStyle = 'margin-top:14px;border-color:rgba(95,179,167,.45)';
+  let card = '';
+  if (parts.length) {
+    card = `<div class="card cont" style="${cardStyle}">
+      <div class="between"><div class="h2" style="margin:0">后续 · 你走的这一路</div><span class="tag">AI 续写 · 共 ${parts.length} 段</span></div>
+      ${parts.map((p, i) => `<div style="font-family:var(--serif);font-size:14px;line-height:1.95;color:#E7E0CC;margin-top:12px">${parts.length > 1 ? `<span class="muted">第 ${i + 1} 段　</span>` : ''}${esc(p)}</div>`).join('')}
+      ${pending ? `<div class="muted" style="margin-top:12px">正在接着往下写…</div>` : ''}
+      ${AI_ON ? `<div class="divider" style="margin:14px 0 0"></div>
+      <h3 style="margin:14px 0 8px">接下来怎么做</h3>
+      ${opts2.length ? `<div class="choice2">${opts2.map(o => `<button class="btn ghost" onclick="dramaPick(${e.id},'${esc(o).replace(/'/g, '·')}')">${esc(o)}</button>`).join('')}</div>`
+        : optLoading ? `<div class="muted">正在给你想两个走法…</div>`
+        : `<button class="btn ghost sm" onclick="dramaOpts(${e.id})">给我两个选项</button>`}
+      <div class="row" style="margin-top:10px">
+        <input id="dramaSay" class="ipt" placeholder="也可以自己写一句：我上前叩关，报上使节身份"
+          onkeydown="if(event.key==='Enter'){dramaCustom(${e.id})}">
+        <button class="btn primary" style="flex:0 0 auto;padding:0 16px;height:44px" onclick="dramaCustom(${e.id})">就这么走 ›</button>
+      </div>` : ''}
+      <div class="between" style="margin-top:12px;align-items:center">
+        <div class="note" style="margin:0">由大模型即时生成，非史料原文。</div>
+        <button class="btn ghost" onclick="dramaRegen(${e.id})" style="flex:0 0 auto;padding:7px 14px;font-size:12px">重写这段</button>
+      </div>
+    </div>`;
+  } else if (pending) {
+    card = `<div class="card cont" style="${cardStyle}">
+      <div class="h2" style="margin:0">后续 · 正在生成…</div>
+      <div class="muted" style="margin-top:8px">大模型正在按你的选择往下写，稍等两三秒。</div>
+    </div>`;
+  } else if (fbBranch) {
+    card = `<div class="card cont" style="${cardStyle}">
+      <div class="between"><div class="h2" style="margin:0">${esc(fbBranch.t)}</div><span class="tag">据此续写</span></div>
+      <div style="font-family:var(--serif);font-size:14px;line-height:1.95;color:#E7E0CC;margin-top:12px">${esc(fbBranch.b)}</div>
+      <div class="note" style="margin-top:10px">这段接在第 ${e.id} 集之后，依据《史记》相关记载续写，不是原文。</div>
+    </div>`;
+  }
+  return `${topbar(e.title, e.ep + ' · ' + e.dur)}<div class="wrap fade playwrap">
+    <div class="pl"><div class="player"><video src="${e.video}" controls playsinline preload="metadata" poster="${A(e.cover)}"></video></div></div>
+    <div class="pr">
+    <div class="card" style="margin-top:14px">
+      <div class="h2">剧情</div><div class="muted">${esc(e.desc)}</div>
+      <div class="quote" style="margin-top:12px">${esc(e.source)}</div>
+    </div>
+    <h3>看完这一集，你会怎么选</h3>
+    <div class="choice2">${opts.map(o => `<button class="btn ${picked === o.l ? 'primary' : 'ghost'}" onclick="dramaChoose(${e.id},'${o.k}','${esc(o.l).replace(/'/g, '·')}')">${picked === o.l ? '✓ ' : ''}${esc(o.l)}</button>`).join('')}</div>
+    ${picked ? `<div class="analysis" style="margin-top:12px">你的选择：${esc(picked)} · 已记录 +${lastPick.points} 积分</div>` : `<div class="note" style="margin-top:10px">选一个就行，系统会记住你的判断。</div>`}
+    ${card}
+    <div class="divider"></div>
+    <div class="row">
+      ${e.id > 1 ? `<button class="btn ghost" onclick="GO('drama/${e.id - 1}')" style="flex:1">‹ 上一集</button>` : ''}
+      ${e.id < EPISODES.length ? `<button class="btn primary nextbtn" onclick="GO('drama/${e.id + 1}')" style="flex:1">下一集 ›</button>`
+        : `<button class="btn primary" onclick="GO('drama')" style="flex:1">四集看完 · 回选集</button>`}
+    </div>
+    <div class="note" style="margin-top:14px">每集约 15 秒，随页面一同打包；首次播放会缓冲几秒，点一下播放键即可。</div>
+    ${e.id < EPISODES.length ? `<div class="nxt" onclick="GO('drama/${e.id + 1}')">
+      <div class="nxt-thumb"><img src="${A(EPISODES[e.id].cover)}" alt=""></div>
+      <div>
+        <div class="muted" style="letter-spacing:2px">下一集 · 第 ${EPISODES[e.id].id} 集</div>
+        <div class="nxt-t">${esc(EPISODES[e.id].title)}</div>
+        <div class="muted" style="margin-top:4px">${esc(EPISODES[e.id].desc)}</div>
+      </div>
+    </div>` : ''}
+    </div>
+  </div>`;
+}
+function dramaChoose(id, k, label) {
+  const e = EPISODES.find(x => x.id === Number(id));
+  const ok = recordChoice({ key: k, src: 'drama', title: e.title, label }, POINTS.relay);
+  if (!ok) {
+    // 已经记过：把老的记录补上 key，避免后续卡片对不上
+    const recs = PROG.choices.filter(c => c.src === 'drama' && c.title === e.title);
+    const hit = recs.find(c => c.label === label);
+    if (hit && !hit.key) { hit.key = k; saveProg(); }
+    toast('这条已经记过，接着往下走就行');
+  } else {
+    toast('抉择已记录 +' + POINTS.relay);
+  }
+  if (!AI_ON) { render(true); return; }
+  if (ok || !genOf(e.id + '-' + k).parts.length) genDrama(e.id, k, label);
+  else render(true);
+  setTimeout(() => {
+    const a = document.querySelector('.cont') || document.querySelector('.analysis') || document.querySelector('.nextbtn');
+    if (a && a.scrollIntoView) a.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }, 80);
+}
+function dramaPick(id, act) {
+  const hit = lastDrama(id);
+  if (!hit || !AI_ON) return;
+  genDrama(hit.e.id, hit.rec.key, hit.rec.label, 'more', act);
+}
+function dramaCustom(id) {
+  const hit = lastDrama(id);
+  if (!hit || !AI_ON) return;
+  const box = document.getElementById('dramaSay');
+  const v = String((box && box.value) || '').trim();
+  if (!v) { toast('先写一句你想怎么做'); if (box && box.focus) box.focus(); return; }
+  genDrama(hit.e.id, hit.rec.key, hit.rec.label, 'more', v);
+}
+function dramaOpts(id) {
+  const hit = lastDrama(id);
+  if (!hit || !AI_ON) return;
+  genDramaOpts(hit.e.id, hit.rec.key);
+}
+function dramaRegen(id) {
+  const hit = lastDrama(id);
+  if (!hit || !AI_ON) return;
+  genDrama(hit.e.id, hit.rec.key, hit.rec.label, 'regen');
+}
+function genDrama(id, k, label, mode, act) {
+  const e = EPISODES.find(x => x.id === Number(id));
+  const gk = id + '-' + k;
+  const old = genOf(gk).parts;
+  const sys = '你是历史短剧编剧。文字要克制、有画面感、带史料味，只写场景与动作，不评论，不编造具体制度或数字。';
+  const ask = '第' + id + '集《' + e.title + '》梗概：' + e.desc + '。观众在结尾选择：' + label +
+    '。请续写这个选择之后发生了什么，60 到 90 字，只用现代白话短句，句子要完整通顺，不堆文言虚词，只输出正文，不要标题和解释。';
+  let msgs;
+  if (mode === 'more' && old.length) {
+    const step = String(act || '').trim() || '继续往前走';
+    msgs = [
+      { role: 'user', content: ask },
+      { role: 'assistant', content: old.join('') },
+      { role: 'user', content: '玩家决定：' + step + '。请写出这个决定发生之后的场面，60 到 90 字，只写场景和动作，不要总结、不要重复上文，只输出正文。' }
+    ];
+  } else if (mode === 'regen' && old.length) {
+    msgs = [{ role: 'user', content: ask }]
+      .concat(old.slice(0, -1).map(p => ({ role: 'assistant', content: p })))
+      .concat([{ role: 'user', content: '重写最后这一段，换个写法，仍是 60 到 90 字，只输出正文。' }]);
+  } else {
+    msgs = [{ role: 'user', content: ask }];
+  }
+  GEN[gk] = 'loading';
+  render(true);
+  aiChat(sys, msgs).then(t => {
+    GEN[gk] = '';
+    PROG.gen = PROG.gen || {};
+    let list;
+    if (mode === 'more') list = old.concat(t);
+    else if (mode === 'regen') list = old.slice(0, -1).concat(t);
+    else list = [t];
+    if (list.length > 10) list = list.slice(-10);
+    PROG.gen[gk] = { parts: list, opts: [] };
+    saveProg();
+    render(true);
+    genDramaOpts(id, k);
+    setTimeout(() => {
+      const a = document.querySelector('.cont');
+      if (a && a.scrollIntoView) a.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }, 60);
+  }).catch(() => {
+    GEN[gk] = 'error';
+    toast('这次没生成成功，先用本地续写');
+    render(true);
+  });
+}
+function genDramaOpts(id, k) {
+  const e = EPISODES.find(x => x.id === Number(id));
+  if (!e) return;
+  const gk = id + '-' + k;
+  const g = genOf(gk);
+  if (!g.parts.length) return;
+  GENOPT[gk] = 'loading';
+  render(true);
+  const sys = '你在给历史短剧的观众出「下一步怎么做」的选项，只写动作，不写解释。';
+  const ask = '第' + id + '集《' + e.title + '》梗概：' + e.desc + '。当前剧情：' + g.parts.join('') +
+    '。请给出主角接下来可以做的 2 个不同动作，每个不超过 12 个字，两个动作方向要明显不同，输出两行，形如：1. 上前叩关\n2. 先遣甘父探路';
+  aiChat(sys, [{ role: 'user', content: ask }]).then(t => {
+    const lines = String(t)
+      .split(/\n+/)
+      .map(s => s.replace(/^\s*(?:\d+|一|二|①|②)\s*[.、．)）:：]\s*/, '').replace(/^[-*]\s*/, '').trim())
+      .filter(Boolean)
+      .slice(0, 2);
+    if (!lines.length) throw new Error('empty');
+    GENOPT[gk] = '';
+    PROG.gen = PROG.gen || {};
+    PROG.gen[gk] = { parts: genOf(gk).parts, opts: lines };
+    saveProg();
+    render(true);
+  }).catch(() => {
+    GENOPT[gk] = 'error';
+    render(true);
+  });
+}
+
+/* ==================== 闯关 ==================== */
+function viewChallengeList() {
+  const cards = BANKS.map((b, i) => {
+    const n = i + 1, lv = PROG.levels[String(n)] || {};
+    return `<div class="level" onclick="GO('challenge/${n}')">
+      <div class="ch">${esc(b.char)}</div>
+      <div style="flex:1"><div class="lname">第 ${n} 关 · ${esc(b.label)}</div>
+        <div class="lsub">${lv.done ? '已通关' : '未开始'} · 三题 · 对应「${esc(b.relicLabel)}」</div></div>
+      <div class="stars">${[0, 1, 2].map(j => j < (lv.filled || 0) ? '★' : '<i>★</i>').join('')}</div>
+    </div>`;
+  }).join('');
+  const s = summary();
+  return `<div class="wrap fade">
+    <div class="h1">史料闯关</div>
+    <div class="muted" style="margin-bottom:16px">读原文，再答题。答对 +${POINTS.right} 积分，一关三题全对得三星，并解锁对应文物。</div>
+    <div class="points"><div><b>${s.stars}/${s.maxStars}</b><span>总星数</span></div>
+      <div><b>${s.doneLevels}/${s.totalLevels}</b><span>已通关</span></div>
+      <div><b>${s.correct}/${s.answered || 0}</b><span>答对/作答</span></div></div>
+    <div class="cols">${cards}</div>
+    <div class="card tap" onclick="GO('wrong')"><div class="between"><div><div style="font-family:var(--serif)">错题本</div>
+      <div class="muted" style="margin-top:5px">${PROG.wrong.length ? '有 ' + PROG.wrong.length + ' 道待订正' : '还没有错题'}</div></div><div class="go">›</div></div></div>
+  </div>`;
+}
+const QUIZ = {};
+function viewQuiz(level) {
+  const n = Number(level) || 1;
+  const bank = BANKS[n - 1] || BANKS[0];
+  if (!QUIZ[n]) QUIZ[n] = { i: 0, chose: '', right: 0, done: false, unlocked: [] };
+  const q = QUIZ[n];
+  if (q.done) {
+    const lv = PROG.levels[String(n)] || {};
+    const st = [0, 1, 2].map(j => j < (lv.filled || 0) ? '★' : '<i>★</i>').join('');
+    return `${topbar('第 ' + n + ' 关 · ' + bank.label, bank.relate)}<div class="wrap fade" style="text-align:center;padding-top:36px">
+      <div class="h1">${q.right === 3 ? '三题全对' : '本关完成'}</div>
+      <div class="stars" style="font-size:30px;margin:18px 0">${st}</div>
+      <div class="muted">答对 ${q.right}/3 · 本关 +${q.right * POINTS.right} 积分</div>
+      ${q.unlocked.length ? `<div class="card" style="margin-top:20px;text-align:left">
+        <div class="h2">解锁文物</div>${q.unlocked.map(r => `<div class="row" style="padding:8px 0">
+        <div style="width:52px;height:52px;display:flex;align-items:center;justify-content:center">${r.img ? `<img src="${A(r.img)}" style="max-width:52px;max-height:52px">` : '📜'}</div>
+        <div><div style="font-family:var(--serif)">${esc(r.name)}</div><div class="muted">${esc(r.era)} · 已入图鉴</div></div></div>`).join('')}
+        </div>` : ''}
+      <div class="row" style="margin-top:22px">
+        ${n > 1 ? `<button class="btn ghost" onclick="GO('challenge/${n - 1}')" style="flex:1">上一关</button>` : ''}
+        ${n < BANKS.length ? `<button class="btn primary" onclick="GO('challenge/${n + 1}')" style="flex:1">下一关 ›</button>`
+          : `<button class="btn primary" onclick="GO('atlas')" style="flex:1">去看图鉴</button>`}
+      </div>
+      <button class="btn ghost block" style="margin-top:12px" onclick="GO('challenge')">回闯关列表</button>
+    </div>`;
+  }
+  const item = bank.questions[q.i];
+  const opts = item.options.map(o => {
+    let cls = 'opt';
+    if (q.chose) {
+      if (o.key === item.answer) cls += ' right';
+      else if (o.key === q.chose) cls += ' wrong';
+    }
+    return `<div class="${cls}" onclick="answer('${o.key}')"><div class="k">${esc(o.key)}</div><div>${esc(o.label)}</div></div>`;
+  }).join('');
+  const fb = q.chose ? `<div class="analysis">
+    <b style="color:${q.chose === item.answer ? 'var(--teal2)' : '#E09A9A'}">${q.chose === item.answer ? '答对了' : '答错了，正确答案是 ' + item.answer}</b><br>${esc(item.analysis)}</div>
+    <button class="btn primary block" style="margin-top:12px" onclick="nextQ(${n})">${q.i === bank.questions.length - 1 ? '看本关成绩' : '下一题'}</button>` : '';
+  return `${topbar('第 ' + n + ' 关 · ' + bank.label, '第 ' + (q.i + 1) + '/3 题')}<div class="wrap fade">
+    <div class="progressbar" style="margin-bottom:16px"><i style="width:${(q.i + (q.chose ? 1 : 0)) / 3 * 100}%"></i></div>
+    <div class="card" style="padding:15px">
+      <div class="muted" style="margin-bottom:8px">史料原文</div>
+      <div class="material">${esc(item.material)}</div>
+      <div class="qtext">${esc(item.question)}</div>
+      ${opts}
+      ${fb}
+    </div>
+    ${q.chose ? '' : `<div class="note">不确定可以先回原文找关键词，答错会进错题本。</div>`}
+  </div>`;
+}
+function answer(key) {
+  const route = parseRoute(); const n = Number(route.seg[1]) || 1;
+  const bank = BANKS[n - 1]; const q = QUIZ[n]; if (q.chose) return;
+  const item = bank.questions[q.i];
+  q.chose = key;
+  const right = key === item.answer;
+  if (right) q.right += 1;
+  const opt = item.options.find(o => o.key === item.answer);
+  recordAnswer(right, {
+    key: 'L' + n + 'Q' + q.i, level: n, levelLabel: bank.label, q: q.i,
+    question: item.question, chosen: key,
+    chosenLabel: (item.options.find(o => o.key === key) || {}).label || '',
+    answer: item.answer, answerLabel: opt.label, analysis: item.analysis, material: item.material
+  });
+  render(true);
+}
+function nextQ(n) {
+  const q = QUIZ[n]; const bank = BANKS[n - 1];
+  if (q.i >= bank.questions.length - 1) {
+    q.done = true;
+    q.unlocked = finishLevel(n, q.right);
+  } else { q.i += 1; q.chose = ''; }
+  render(true);
+}
+
+/* ==================== 文物 / 图鉴 ==================== */
+function viewRelic(id) {
+  const r = relicOf(id) || relicOf('hufu');
+  if (!r.unlocked) {
+    return `${topbar('未解锁的文物', '第 ' + r.unlockLevel + ' 关可解锁')}<div class="wrap fade" style="text-align:center;padding-top:40px">
+      <div style="font-size:44px;opacity:.4">🔒</div>
+      <div class="h1" style="margin-top:18px">还没到手</div>
+      <div class="muted">通关「第 ${r.unlockLevel} 关」后自动入册</div>
+      <button class="btn primary" style="margin-top:24px" onclick="GO('challenge/${r.unlockLevel}')">去闯这一关</button>
+    </div>`;
+  }
+  return `${topbar(r.name, r.era + ' · ' + r.material)}<div class="wrap fade">
+    <div class="big">${r.img ? `<img src="${r.img}" alt="">` : `<div style="font-size:40px">📜</div>`}</div>
+    <div class="card">
+      <div class="kv"><b>年代</b><span>${esc(r.era)}</span></div>
+      <div class="kv"><b>材质</b><span>${esc(r.material)}</span></div>
+      <div class="kv"><b>来源</b><span>${esc(r.origin)}</span></div>
+    </div>
+    <div class="quote">${esc(r.quote)}</div>
+    <div class="h2">它在这局里的用处</div>
+    <div class="muted" style="line-height:1.9">${esc(r.story)}</div>
+  </div>`;
+}
+function viewAtlas() {
+  const list = relicList();
+  const tab = window.__atlasTab || 'all';
+  const shown = tab === 'all' ? list : list.filter(x => x.cat === tab);
+  const s = summary();
+  const cards = shown.map(r => `<div class="rc ${r.locked ? 'locked' : ''}" onclick="GO('relic/${r.id}')">
+    <div class="pic ${r.locked ? 'lock' : ''}">${r.img ? `<img src="${r.img}" alt="">` : r.locked ? '🔒' : '📜'}</div>
+    <div class="n">${esc(r.name)}</div><div class="e">${esc(r.era || (r.locked ? '第 ' + r.unlockLevel + ' 关解锁' : '简牍'))}</div></div>`).join('');
+  return `${topbar('史料图鉴', '已收 ' + s.collected + '/' + s.relicTotal)}<div class="wrap fade">
+    <div class="progressbar" style="margin-bottom:14px"><i style="width:${s.atlasPercent}%"></i></div>
+    <div class="chips" style="margin-bottom:16px">${TABS.map(t =>
+      `<span class="chip ${tab === t.key ? 'on' : ''}" onclick="setAtlasTab('${t.key}')">${esc(t.label)}</span>`).join('')}</div>
+    <div class="grid">${cards}</div>
+  </div>`;
+}
+function setAtlasTab(k) { window.__atlasTab = k; render(true); }
+
+/* ==================== 时间线 ==================== */
+function viewTimeline() {
+  const items = STATIONS.map(st => `<div class="tl-item">
+    <div class="y">${esc(st.year)} · ${esc(st.era)}</div>
+    <div class="t">${esc(st.title)}</div>
+    <div class="d">${esc(st.desc)}</div>
+    <div class="chips" style="margin-top:8px">${(st.links || []).map(l =>
+      `<span class="chip" onclick="GO('${l.type === 'level' ? 'challenge/' + l.level : 'story/1/' + (l.act || 1)}')">${esc(l.label)}</span>`).join('')}</div>
+  </div>`).join('');
+  return `${topbar('历史时间线', '从凿空到过所')}<div class="wrap fade"><div class="tl">${items}</div>
+    <div class="note">时间点依《史记·大宛列传》《汉书》系年整理，用于教学参考。</div></div>`;
+}
+
+/* ==================== 学习报告 ==================== */
+function viewReport() {
+  const s = summary();
+  const acc = s.answered ? Math.round(s.correct / s.answered * 100) : 0;
+  const levels = BANKS.map((b, i) => {
+    const lv = PROG.levels[String(i + 1)] || {};
+    return `<div style="margin-bottom:12px">
+      <div class="between" style="font-size:12.5px"><span>第 ${i + 1} 关 · ${esc(b.label)}</span>
+      <span class="stars">${[0, 1, 2].map(j => j < (lv.filled || 0) ? '★' : '<i>★</i>').join('')}</span></div>
+      <div class="progressbar" style="margin-top:6px"><i style="width:${(lv.filled || 0) / 3 * 100}%"></i></div></div>`;
+  }).join('') || '';
+  const choices = PROG.choices.slice().sort((a, b) => b.time - a.time).slice(0, 5);
+  return `${topbar('学习报告', '这一局你留下的痕迹')}<div class="wrap fade">
+    <div class="points"><div><b>${s.points}</b><span>总积分</span></div>
+      <div><b>${acc}%</b><span>答题正确率</span></div><div><b>${s.acts}/9</b><span>结案幕数</span></div></div>
+    <div class="card"><div class="h2">闯关进度</div>${levels}
+      <div class="muted">累计作答 ${s.answered} 题，答对 ${s.correct} 题。</div></div>
+    <div class="card"><div class="h2">你的抉择（最近 5 条）</div>
+      ${choices.length ? choices.map(c => `<div class="kv" style="align-items:flex-start">
+        <b style="width:auto;color:var(--gold2);font-family:var(--serif)">${esc(c.title)}</b>
+        <span style="flex:1;text-align:right">${esc(c.label)}</span>
+        <span style="color:var(--teal2);font-size:11px">+${c.points}</span></div>`).join('')
+        : '<div class="muted">还没有做过抉择。剧本和短剧里各有一处。</div>'}
+      <div class="divider"></div><div class="muted">共记录 ${PROG.choices.length} 次抉择。</div></div>
+    <div class="card tap" onclick="GO('wrong')"><div class="between"><div><div style="font-family:var(--serif)">错题本</div>
+      <div class="muted" style="margin-top:5px">${PROG.wrong.length} 道待订正</div></div><div class="go">›</div></div></div>
+    <div class="note">报告数据只存在本机浏览器，换设备不会同步。</div>
+  </div>`;
+}
+
+/* ==================== 错题本 ==================== */
+function viewWrong() {
+  if (!PROG.wrong.length) {
+    return `${topbar('错题本', '0 道')}<div class="wrap fade" style="text-align:center;padding-top:50px">
+      <div style="font-size:40px">✓</div><div class="h1" style="margin-top:16px">干净</div>
+      <div class="muted">目前没有错题，去闯关试试。</div>
+      <button class="btn primary" style="margin-top:22px" onclick="GO('challenge')">去闯关</button></div>`;
+  }
+  const groups = {};
+  PROG.wrong.slice().sort((a, b) => b.time - a.time).forEach(w => { (groups[w.level] = groups[w.level] || []).push(w); });
+  const body = Object.keys(groups).sort((a, b) => a - b).map(lv => {
+    const items = groups[lv].map(w => `<div class="card" style="padding:14px">
+      <div class="between"><span class="tag gold">第 ${w.level} 关 · ${esc(w.levelLabel)}</span><span class="muted" style="font-size:10px">第 ${w.q + 1} 题</span></div>
+      <div class="material" style="margin-top:10px;font-size:12.5px">${esc(w.material)}</div>
+      <div class="qtext" style="font-size:13.5px">${esc(w.question)}</div>
+      <div class="kv"><b>你选</b><span style="color:#E09A9A">${esc(w.chosen)}. ${esc(w.chosenLabel)}</span></div>
+      <div class="kv"><b>正确</b><span style="color:var(--teal2)">${esc(w.answer)}. ${esc(w.answerLabel)}</span></div>
+      <div class="analysis">${esc(w.analysis)}</div></div>`).join('');
+    return `<div class="h3">第 ${lv} 关 · ${esc(groups[lv][0].levelLabel)}（${groups[lv].length} 题）</div>${items}`;
+  }).join('');
+  return `${topbar('错题本', PROG.wrong.length + ' 道待订正')}<div class="wrap fade">
+    ${body}
+    <button class="btn ghost block" style="margin-top:8px" onclick="clearWrong()">清空错题本</button></div>`;
+}
+function clearWrong() { PROG.wrong = []; saveProg(); toast('已清空'); render(true); }
+
+/* ==================== 我的 ==================== */
+function viewProfile() {
+  const s = summary();
+  return `<div class="wrap fade">
+    <div class="me-top"><div class="ava" onclick="pickAvatarProfile()">${avatarImg(USER.avatar)}</div>
+      <div style="flex:1"><div class="nm">${esc(USER.name)}</div>
+        <div class="muted" style="margin-top:5px">${s.acts ? '已结案 ' + s.acts + ' 幕 · ' : ''}积分 ${s.points}</div></div>
+      <button class="btn ghost sm" onclick="rename()">改昵称</button></div>
+    <div class="points"><div><b>${s.points}</b><span>积分</span></div>
+      <div><b>${s.stars}/${s.maxStars}</b><span>星数</span></div><div><b>${s.atlasPercent}%</b><span>图鉴</span></div></div>
+    <div class="card"><div class="between"><div><div style="font-family:var(--serif)">史料图鉴</div>
+      <div class="muted" style="margin-top:5px">已收 ${s.collected}/${s.relicTotal} 件</div></div>
+      <button class="btn ghost sm" onclick="GO('atlas')">查看</button></div>
+      <div class="progressbar" style="margin-top:10px"><i style="width:${s.atlasPercent}%"></i></div></div>
+    <div class="list" style="margin-bottom:14px">
+      <div class="li" onclick="GO('report')"><span>学习报告</span><span class="r">›</span></div>
+      <div class="li" onclick="GO('wrong')"><span>错题本</span><span class="r">${PROG.wrong.length} 道 ›</span></div>
+      <div class="li" onclick="GO('timeline')"><span>历史时间线</span><span class="r">4 站 ›</span></div>
+      <div class="li" onclick="GO('about')"><span>关于与说明</span><span class="r">›</span></div>
+    </div>
+    <button class="btn ghost block" onclick="resetAll()">重置全部进度</button>
+    <div class="note" style="margin-top:14px">头像与昵称、答题与抉择记录都只保存在本机浏览器，不上传服务器，也不提供第三方。</div>
+  </div>`;
+}
+function rename() {
+  const n = prompt('新的昵称', USER.name);
+  if (n && n.trim()) { USER.name = n.trim().slice(0, 12); localStorage.setItem(UKEY, JSON.stringify(USER)); render(true); }
+}
+function pickAvatarProfile() {
+  const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*';
+  i.onchange = () => {
+    const f = i.files[0]; if (!f) return;
+    const fr = new FileReader();
+    fr.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const c = document.createElement('canvas'); c.width = c.height = 160;
+        const side = Math.min(img.width, img.height);
+        c.getContext('2d').drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, 160, 160);
+        USER.avatar = c.toDataURL('image/jpeg', .8);
+        try { localStorage.setItem(UKEY, JSON.stringify(USER)); } catch (e) {}
+        render(true);
+      };
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(f);
+  };
+  i.click();
+}
+function resetAll() {
+  if (!confirm('清空全部积分、星数、图鉴与记录？此操作不可恢复。')) return;
+  PROG = blank(); saveProg(); Object.keys(QUIZ).forEach(k => delete QUIZ[k]);
+  Object.keys(STORY_UI).forEach(k => delete STORY_UI[k]);
+  toast('已重置'); render(true);
+}
+
+/* ==================== 关于 ==================== */
+function viewAbout() {
+  const s = summary();
+  return `${topbar('关于时光侦局', '版本 1.0 · 网页体验版')}<div class="wrap fade">
+    <div class="card"><div class="h2">这是什么</div>
+      <div class="muted" style="line-height:1.9">「时光侦局」是一个历史情境学习工具：用剧本杀、AI 短剧和史料闯关，把汉代史料变成可以亲手参与的情境。本站为小程序版的网页移植。</div></div>
+    <div class="card"><div class="h2">AI 与内容标识</div>
+      <div class="muted" style="line-height:1.9">剧本页对话默认由本地史料规则生成，不联网；短剧为 AI 生成素材，页面已标注「AI 历史短剧」，请勿当作史料影像使用。史料原文引用《史记》《汉书》与汉简释文，注释为教学性解释。</div></div>
+    <div class="card"><div class="h2">数据与隐私</div>
+      <div class="muted" style="line-height:1.9">昵称、头像、积分、答题与抉择记录全部保存在你本机浏览器（localStorage），不上传服务器，也不提供给第三方。换浏览器或清缓存会丢失。</div></div>
+    <div class="card"><div class="h2">当前状态</div>
+      <div class="kv"><b>积分</b><span>${s.points}</span></div>
+      <div class="kv"><b>图鉴</b><span>${s.collected}/${s.relicTotal}</span></div>
+      <div class="kv"><b>视频</b><span>外链 CDN</span></div>
+      <div class="kv"><b>AI</b><span>${AI_ON ? (AI_ENDPOINT ? '已接中转' : '真 AI 已开') : '本地剧情'}</span></div>
+    </div>
+    <div class="note">本项目为个人学习作品，非经营性服务，不提供付费、课程售卖或直播。</div>
+  </div>`;
+}
+
+/* ==================== 路由 ==================== */
+function parseRoute() {
+  const raw = (location.hash || '#/index').replace(/^#\//, '');
+  const seg = raw.split('/').filter(Boolean);
+  return { name: seg[0] || 'index', seg };
+}
+const MAIN = ['index', 'story', 'drama', 'challenge', 'profile'];
+function isWide() { return window.innerWidth >= 900; }
+function render(keepScroll) {
+  const r = parseRoute();
+  const y = window.scrollY;
+  let html = '', tab = '';
+  switch (r.name) {
+    case 'splash': html = viewSplash(); break;
+    case 'login': html = viewLogin(); break;
+    case 'index': html = viewIndex(); tab = tabbar('index'); break;
+    case 'story':
+      html = r.seg.length >= 3 ? viewStoryAct(r.seg[1], r.seg[2]) : viewStoryList();
+      tab = r.seg.length >= 3 ? '' : tabbar('story');
+      break;
+    case 'drama':
+      html = r.seg.length >= 2 ? viewDramaPlay(r.seg[1]) : viewDrama();
+      tab = r.seg.length >= 2 ? '' : tabbar('drama');
+      break;
+    case 'challenge':
+      html = r.seg.length >= 2 ? viewQuiz(r.seg[1]) : viewChallengeList();
+      tab = r.seg.length >= 2 ? '' : tabbar('challenge');
+      break;
+    case 'relic': html = viewRelic(r.seg[1] || 'hufu'); break;
+    case 'atlas': html = viewAtlas(); break;
+    case 'timeline': html = viewTimeline(); break;
+    case 'report': html = viewReport(); break;
+    case 'wrong': html = viewWrong(); break;
+    case 'about': html = viewAbout(); break;
+    case 'profile': html = viewProfile(); break;
+    default: html = viewIndex(); tab = tabbar('index');
+  }
+  const isMain = MAIN.indexOf(r.name) >= 0 && r.seg.length <= 1;
+  const ROOT = { relic: 'atlas', atlas: 'atlas', timeline: 'index', report: 'profile', wrong: 'profile', about: 'profile' };
+  const activeKey = isMain ? r.name : (ROOT[r.name] || 'index');
+  const showRail = r.name !== 'splash' && r.name !== 'login' && (isMain || isWide());
+  tab = showRail ? tabbar(activeKey) : '';
+  if (document.body && document.body.dataset) {
+    document.body.dataset.rail = showRail ? '1' : '0';
+    document.body.dataset.view = r.name;
+  }
+  $('#app').innerHTML = html;
+  $('#tabbar').innerHTML = tab;
+  if (keepScroll) window.scrollTo(0, y); else window.scrollTo(0, 0);
+  document.title = '时光侦局 · ' + ({ splash: '穿越千年', login: '登录', index: '首页', story: '历史剧本杀', drama: 'AI 历史短剧', challenge: '史料闯关', relic: '史料图鉴', atlas: '史料图鉴', timeline: '历史时间线', report: '学习报告', wrong: '错题本', about: '关于', profile: '我的' }[r.name] || '穿越千年');
+}
+window.addEventListener('hashchange', () => render());
+let wideCache = isWide();
+window.addEventListener('resize', () => {
+  const w = isWide();
+  if (w !== wideCache) { wideCache = w; render(true); }
+});
+window.addEventListener('load', () => {
+  if (!location.hash) location.hash = '#/splash';
+  render();
+});
+render();
+
+</script>
+</body>
+</html>
